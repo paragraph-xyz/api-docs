@@ -1,0 +1,53 @@
+---
+title: Authentication
+description: 'Learn how to authenticate with the Paragraph API'
+---
+
+# Authentication
+
+The Paragraph API uses API keys for authentication. Some endpoints are public and don't require authentication, while others require an API key.
+
+## Getting an API Key
+
+1. Go to your [Paragraph Dashboard](https://paragraph.com)
+2. Navigate to Settings > Developer
+3. Generate a new API key
+4. Store it securely - it won't be shown again
+
+## Using Your API Key
+
+### With the SDK
+
+```typescript
+import { ParagraphSDK } from '@paragraph/sdk';
+
+const sdk = new ParagraphSDK({
+  apiKey: 'your-api-key-here',
+  baseURL: 'https://api.paragraph.com/api'
+});
+```
+
+### With HTTP Requests
+
+Include your API key in the `x-api-key` header:
+
+```bash
+curl -H "x-api-key: your-api-key-here" \
+  https://api.paragraph.com/api/v1/publications/your-pub-id
+```
+
+## Public Endpoints
+
+These endpoints don't require authentication:
+
+- `GET /v1/publications/{id}`
+- `GET /v1/publications/slug/{slug}`
+- `GET /v1/publications/domain/{domain}`
+- `GET /v1/posts/{id}`
+- `GET /v1/users/{id}`
+- `GET /v1/coins/{address}`
+
+## Rate Limiting
+
+- **Unauthenticated requests**: 100 requests per minute per IP
+- **Authenticated requests**: 1000 requests per minute per API key

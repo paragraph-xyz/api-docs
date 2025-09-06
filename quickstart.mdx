@@ -1,0 +1,46 @@
+---
+title: Quickstart
+description: 'Get started with the Paragraph API in 5 minutes'
+---
+
+# Quickstart
+
+## Installation
+
+<CodeGroup>
+```bash npm
+npm install @paragraph/sdk
+```
+
+```bash yarn
+yarn add @paragraph/sdk
+```
+
+```bash pnpm
+pnpm add @paragraph/sdk
+```
+</CodeGroup>
+
+## Making Your First Request
+
+<CodeGroup>
+```typescript SDK
+import { ParagraphSDK } from '@paragraph/sdk';
+
+const sdk = new ParagraphSDK();
+
+// Get a publication by ID
+const publication = await sdk.publications.getById('pub123');
+console.log(publication);
+```
+
+```bash cURL
+curl https://api.paragraph.com/api/v1/publications/pub123
+```
+</CodeGroup>
+
+## Next Steps
+
+- [Explore the API Reference](/api-reference)
+- [Learn about authentication](/authentication)
+- [View SDK documentation](/sdk)
