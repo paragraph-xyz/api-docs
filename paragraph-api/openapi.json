@@ -3,7 +3,9 @@
   "paths": {
     "/v1/publications/{publicationId}": {
       "get": {
-        "tags": ["publications"],
+        "tags": [
+          "publications"
+        ],
         "parameters": [
           {
             "name": "publicationId",
@@ -72,7 +74,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -81,7 +85,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -95,7 +102,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -104,7 +113,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -114,7 +126,9 @@
     },
     "/v1/publications/slug/{slug}": {
       "get": {
-        "tags": ["publications"],
+        "tags": [
+          "publications"
+        ],
         "parameters": [
           {
             "name": "slug",
@@ -183,7 +197,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -192,7 +208,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -206,7 +225,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -215,7 +236,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -225,7 +249,9 @@
     },
     "/v1/publications/domain/{domain}": {
       "get": {
-        "tags": ["publications"],
+        "tags": [
+          "publications"
+        ],
         "parameters": [
           {
             "name": "domain",
@@ -294,7 +320,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -303,7 +331,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -317,7 +348,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -326,7 +359,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -336,7 +372,9 @@
     },
     "/v1/publications/{publicationId}/authors": {
       "get": {
-        "tags": ["publications"],
+        "tags": [
+          "publications"
+        ],
         "parameters": [
           {
             "name": "publicationId",
@@ -397,7 +435,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -406,7 +446,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -420,7 +463,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -429,7 +474,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -439,7 +487,9 @@
     },
     "/v1/publications/{publicationId}/subscribers/count": {
       "get": {
-        "tags": ["publications"],
+        "tags": [
+          "publications"
+        ],
         "parameters": [
           {
             "name": "publicationId",
@@ -469,7 +519,9 @@
                       "type": "number"
                     }
                   },
-                  "required": ["count"]
+                  "required": [
+                    "count"
+                  ]
                 }
               }
             }
@@ -483,7 +535,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -492,7 +546,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -506,7 +563,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -515,7 +574,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -525,7 +587,9 @@
     },
     "/v1/publications/{publicationId}/posts": {
       "get": {
-        "tags": ["posts"],
+        "tags": [
+          "posts"
+        ],
         "parameters": [
           {
             "name": "publicationId",
@@ -621,10 +685,15 @@
                           "type": "number"
                         }
                       },
-                      "required": ["hasMore"]
+                      "required": [
+                        "hasMore"
+                      ]
                     }
                   },
-                  "required": ["items", "pagination"]
+                  "required": [
+                    "items",
+                    "pagination"
+                  ]
                 }
               }
             }
@@ -638,7 +707,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -647,7 +718,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -661,7 +735,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -670,7 +746,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -680,7 +759,9 @@
     },
     "/v1/posts/{postId}": {
       "get": {
-        "tags": ["posts"],
+        "tags": [
+          "posts"
+        ],
         "parameters": [
           {
             "name": "postId",
@@ -752,7 +833,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -761,7 +844,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -775,7 +861,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -784,7 +872,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -794,7 +885,9 @@
     },
     "/v1/publications/{publicationId}/posts/slug/{slug}": {
       "get": {
-        "tags": ["posts"],
+        "tags": [
+          "posts"
+        ],
         "parameters": [
           {
             "name": "publicationId",
@@ -874,7 +967,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -883,7 +978,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -897,7 +995,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -906,7 +1006,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -916,7 +1019,9 @@
     },
     "/v1/users/{userId}": {
       "get": {
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "parameters": [
           {
             "name": "userId",
@@ -974,7 +1079,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -983,7 +1090,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -997,7 +1107,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -1006,7 +1118,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -1016,7 +1131,9 @@
     },
     "/v1/users/wallet/{walletAddress}": {
       "get": {
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "parameters": [
           {
             "name": "walletAddress",
@@ -1074,7 +1191,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -1083,7 +1202,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -1097,7 +1219,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -1106,7 +1230,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -1116,7 +1243,9 @@
     },
     "/v1/coins/{contractAddress}": {
       "get": {
-        "tags": ["coins"],
+        "tags": [
+          "coins"
+        ],
         "parameters": [
           {
             "name": "contractAddress",
@@ -1155,7 +1284,12 @@
                       "type": "string"
                     }
                   },
-                  "required": ["id", "contractAddress", "symbol", "postId"]
+                  "required": [
+                    "id",
+                    "contractAddress",
+                    "symbol",
+                    "postId"
+                  ]
                 }
               }
             }
@@ -1169,7 +1303,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -1178,7 +1314,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -1192,7 +1331,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -1201,7 +1342,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -1211,7 +1355,9 @@
     },
     "/v1/coins/{contractAddress}/holders": {
       "get": {
-        "tags": ["coins"],
+        "tags": [
+          "coins"
+        ],
         "parameters": [
           {
             "name": "contractAddress",
@@ -1272,7 +1418,11 @@
                             "type": "string"
                           }
                         },
-                        "required": ["walletAddress", "balance", "supportedAt"]
+                        "required": [
+                          "walletAddress",
+                          "balance",
+                          "supportedAt"
+                        ]
                       }
                     },
                     "pagination": {
@@ -1288,10 +1438,15 @@
                           "type": "number"
                         }
                       },
-                      "required": ["hasMore"]
+                      "required": [
+                        "hasMore"
+                      ]
                     }
                   },
-                  "required": ["items", "pagination"]
+                  "required": [
+                    "items",
+                    "pagination"
+                  ]
                 }
               }
             }
@@ -1305,7 +1460,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -1314,7 +1471,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
@@ -1328,7 +1488,9 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "msg": {
                       "type": "string"
@@ -1337,7 +1499,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["success", "msg"]
+                  "required": [
+                    "success",
+                    "msg"
+                  ]
                 }
               }
             }
