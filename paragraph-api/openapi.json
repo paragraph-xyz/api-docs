@@ -17,14 +17,6 @@
               "type": "string"
             },
             "description": "Unique identifier of the publication"
-          },
-          {
-            "name": "x-api-key",
-            "in": "header",
-            "schema": {
-              "type": "string",
-              "description": "API key for authenticating requests"
-            }
           }
         ],
         "responses": {
@@ -49,11 +41,13 @@
                     },
                     "slug": {
                       "type": "string",
-                      "pattern": "^[a-z0-9-]+$",
-                      "description": "URL-friendly identifier for the publication"
+                      "minLength": 1,
+                      "maxLength": 256,
+                      "description": "URL-friendly identifier for the publication; accessible at paragraph.com/@[slug]"
                     },
-                    "custom_domain": {
+                    "customDomain": {
                       "type": "string",
+                      "format": "uri",
                       "description": "Custom domain configured for this publication"
                     },
                     "summary": {
@@ -61,7 +55,7 @@
                       "maxLength": 500,
                       "description": "Brief description of the publication (max 500 characters)"
                     },
-                    "logo_url": {
+                    "logoUrl": {
                       "type": "string",
                       "format": "uri",
                       "description": "URL to the publication's logo image"
@@ -147,7 +141,7 @@
     },
     "/v1/publications/slug/{slug}": {
       "get": {
-        "description": "Retrieve publication details using its URL-friendly slug",
+        "description": "Retrieve publication details using its URL-friendly slug. Optionally include an @ before the slug.",
         "summary": "Get publication by slug",
         "tags": [
           "publications"
@@ -159,17 +153,10 @@
             "required": true,
             "schema": {
               "type": "string",
-              "pattern": "^[a-z0-9-]+$"
+              "minLength": 1,
+              "maxLength": 256
             },
             "description": "URL-friendly identifier of the publication"
-          },
-          {
-            "name": "x-api-key",
-            "in": "header",
-            "schema": {
-              "type": "string",
-              "description": "API key for authenticating requests"
-            }
           }
         ],
         "responses": {
@@ -194,11 +181,13 @@
                     },
                     "slug": {
                       "type": "string",
-                      "pattern": "^[a-z0-9-]+$",
-                      "description": "URL-friendly identifier for the publication"
+                      "minLength": 1,
+                      "maxLength": 256,
+                      "description": "URL-friendly identifier for the publication; accessible at paragraph.com/@[slug]"
                     },
-                    "custom_domain": {
+                    "customDomain": {
                       "type": "string",
+                      "format": "uri",
                       "description": "Custom domain configured for this publication"
                     },
                     "summary": {
@@ -206,7 +195,7 @@
                       "maxLength": 500,
                       "description": "Brief description of the publication (max 500 characters)"
                     },
-                    "logo_url": {
+                    "logoUrl": {
                       "type": "string",
                       "format": "uri",
                       "description": "URL to the publication's logo image"
@@ -306,14 +295,6 @@
               "type": "string"
             },
             "description": "Custom domain of the publication"
-          },
-          {
-            "name": "x-api-key",
-            "in": "header",
-            "schema": {
-              "type": "string",
-              "description": "API key for authenticating requests"
-            }
           }
         ],
         "responses": {
@@ -338,11 +319,13 @@
                     },
                     "slug": {
                       "type": "string",
-                      "pattern": "^[a-z0-9-]+$",
-                      "description": "URL-friendly identifier for the publication"
+                      "minLength": 1,
+                      "maxLength": 256,
+                      "description": "URL-friendly identifier for the publication; accessible at paragraph.com/@[slug]"
                     },
-                    "custom_domain": {
+                    "customDomain": {
                       "type": "string",
+                      "format": "uri",
                       "description": "Custom domain configured for this publication"
                     },
                     "summary": {
@@ -350,7 +333,7 @@
                       "maxLength": 500,
                       "description": "Brief description of the publication (max 500 characters)"
                     },
-                    "logo_url": {
+                    "logoUrl": {
                       "type": "string",
                       "format": "uri",
                       "description": "URL to the publication's logo image"
@@ -450,14 +433,6 @@
               "type": "string"
             },
             "description": "Unique identifier of the publication"
-          },
-          {
-            "name": "x-api-key",
-            "in": "header",
-            "schema": {
-              "type": "string",
-              "description": "API key for authenticating requests"
-            }
           }
         ],
         "responses": {
@@ -477,9 +452,9 @@
                       "walletAddress": {
                         "type": "string",
                         "pattern": "^0x[a-fA-F0-9]{40}$",
-                        "description": "Ethereum wallet address of the user"
+                        "description": "Wallet address of the user"
                       },
-                      "avatar_url": {
+                      "avatarUrl": {
                         "type": "string",
                         "format": "uri",
                         "description": "URL to the user's avatar image"
@@ -487,12 +462,19 @@
                       "publicationId": {
                         "type": "string",
                         "description": "ID of the publication this user belongs to"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Display name of the user"
+                      },
+                      "bio": {
+                        "type": "string",
+                        "maxLength": 500,
+                        "description": "Brief biography of the user (max 500 characters)"
                       }
                     },
                     "required": [
                       "id",
-                      "walletAddress",
-                      "avatar_url",
                       "publicationId"
                     ]
                   },
@@ -584,14 +566,6 @@
               "type": "string"
             },
             "description": "Unique identifier of the publication"
-          },
-          {
-            "name": "x-api-key",
-            "in": "header",
-            "schema": {
-              "type": "string",
-              "description": "API key for authenticating requests"
-            }
           }
         ],
         "responses": {
@@ -685,7 +659,7 @@
     "/v1/publications/{publicationId}/posts": {
       "get": {
         "description": "Retrieve a paginated list of posts from a publication",
-        "summary": "List publication posts",
+        "summary": "List posts in a publication",
         "tags": [
           "posts"
         ],
@@ -700,14 +674,6 @@
             "description": "Unique identifier of the publication"
           },
           {
-            "name": "x-api-key",
-            "in": "header",
-            "schema": {
-              "type": "string",
-              "description": "API key for authenticating requests"
-            }
-          },
-          {
             "name": "cursor",
             "in": "query",
             "description": "Cursor for pagination",
@@ -718,9 +684,9 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Maximum number of items to return (1-100, default: 20)",
+            "description": "Maximum number of items to return (1-100, default: 10)",
             "schema": {
-              "default": 20,
+              "default": 10,
               "type": "integer",
               "minimum": 1,
               "maximum": 100
@@ -747,17 +713,33 @@
                           "title": {
                             "type": "string",
                             "maxLength": 200,
-                            "description": "Title of the post (max 200 characters)"
+                            "description": "Title of the post"
+                          },
+                          "imageUrl": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "Optional URL to the post's main image"
+                          },
+                          "publishedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "ISO 8601 timestamp when the post was published"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "ISO 8601 timestamp when the post was last updated"
                           },
                           "subtitle": {
                             "type": "string",
                             "maxLength": 300,
-                            "description": "Subtitle or brief summary (max 300 characters)"
+                            "description": "Optional subtitle or brief summary"
                           },
                           "slug": {
                             "type": "string",
-                            "pattern": "^[a-z0-9-]+$",
-                            "description": "URL-friendly identifier for the post"
+                            "minLength": 1,
+                            "maxLength": 256,
+                            "description": "URL-friendly identifier for the post; accessible at paragraph.com/@[publicationSlug]/[slug]"
                           },
                           "staticHtml": {
                             "type": "string",
@@ -765,7 +747,7 @@
                           },
                           "json": {
                             "type": "string",
-                            "description": "JSON representation of the post content structure"
+                            "description": "TipTap JSON representation of the post content structure. This is the source of truth that the staticHtml and markdown is generated from"
                           },
                           "markdown": {
                             "type": "string",
@@ -773,7 +755,7 @@
                           },
                           "coinId": {
                             "type": "string",
-                            "description": "ID of the associated token/coin if post is tokenized"
+                            "description": "ID of the associated coin, if the post is coined"
                           }
                         },
                         "required": [
@@ -900,14 +882,6 @@
               "type": "string"
             },
             "description": "Unique identifier of the post"
-          },
-          {
-            "name": "x-api-key",
-            "in": "header",
-            "schema": {
-              "type": "string",
-              "description": "API key for authenticating requests"
-            }
           }
         ],
         "responses": {
@@ -925,17 +899,33 @@
                     "title": {
                       "type": "string",
                       "maxLength": 200,
-                      "description": "Title of the post (max 200 characters)"
+                      "description": "Title of the post"
+                    },
+                    "imageUrl": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "Optional URL to the post's main image"
+                    },
+                    "publishedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "ISO 8601 timestamp when the post was published"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "ISO 8601 timestamp when the post was last updated"
                     },
                     "subtitle": {
                       "type": "string",
                       "maxLength": 300,
-                      "description": "Subtitle or brief summary (max 300 characters)"
+                      "description": "Optional subtitle or brief summary"
                     },
                     "slug": {
                       "type": "string",
-                      "pattern": "^[a-z0-9-]+$",
-                      "description": "URL-friendly identifier for the post"
+                      "minLength": 1,
+                      "maxLength": 256,
+                      "description": "URL-friendly identifier for the post; accessible at paragraph.com/@[publicationSlug]/[slug]"
                     },
                     "staticHtml": {
                       "type": "string",
@@ -943,7 +933,7 @@
                     },
                     "json": {
                       "type": "string",
-                      "description": "JSON representation of the post content structure"
+                      "description": "TipTap JSON representation of the post content structure. This is the source of truth that the staticHtml and markdown is generated from"
                     },
                     "markdown": {
                       "type": "string",
@@ -951,7 +941,7 @@
                     },
                     "coinId": {
                       "type": "string",
-                      "description": "ID of the associated token/coin if post is tokenized"
+                      "description": "ID of the associated coin, if the post is coined"
                     }
                   },
                   "required": [
@@ -1057,17 +1047,10 @@
             "required": true,
             "schema": {
               "type": "string",
-              "pattern": "^[a-z0-9-]+$"
+              "minLength": 1,
+              "maxLength": 256
             },
             "description": "URL-friendly identifier of the post"
-          },
-          {
-            "name": "x-api-key",
-            "in": "header",
-            "schema": {
-              "type": "string",
-              "description": "API key for authenticating requests"
-            }
           }
         ],
         "responses": {
@@ -1085,17 +1068,33 @@
                     "title": {
                       "type": "string",
                       "maxLength": 200,
-                      "description": "Title of the post (max 200 characters)"
+                      "description": "Title of the post"
+                    },
+                    "imageUrl": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "Optional URL to the post's main image"
+                    },
+                    "publishedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "ISO 8601 timestamp when the post was published"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "ISO 8601 timestamp when the post was last updated"
                     },
                     "subtitle": {
                       "type": "string",
                       "maxLength": 300,
-                      "description": "Subtitle or brief summary (max 300 characters)"
+                      "description": "Optional subtitle or brief summary"
                     },
                     "slug": {
                       "type": "string",
-                      "pattern": "^[a-z0-9-]+$",
-                      "description": "URL-friendly identifier for the post"
+                      "minLength": 1,
+                      "maxLength": 256,
+                      "description": "URL-friendly identifier for the post; accessible at paragraph.com/@[publicationSlug]/[slug]"
                     },
                     "staticHtml": {
                       "type": "string",
@@ -1103,7 +1102,7 @@
                     },
                     "json": {
                       "type": "string",
-                      "description": "JSON representation of the post content structure"
+                      "description": "TipTap JSON representation of the post content structure. This is the source of truth that the staticHtml and markdown is generated from"
                     },
                     "markdown": {
                       "type": "string",
@@ -1111,7 +1110,7 @@
                     },
                     "coinId": {
                       "type": "string",
-                      "description": "ID of the associated token/coin if post is tokenized"
+                      "description": "ID of the associated coin, if the post is coined"
                     }
                   },
                   "required": [
@@ -1210,14 +1209,6 @@
               "type": "string"
             },
             "description": "Unique identifier of the user"
-          },
-          {
-            "name": "x-api-key",
-            "in": "header",
-            "schema": {
-              "type": "string",
-              "description": "API key for authenticating requests"
-            }
           }
         ],
         "responses": {
@@ -1235,9 +1226,9 @@
                     "walletAddress": {
                       "type": "string",
                       "pattern": "^0x[a-fA-F0-9]{40}$",
-                      "description": "Ethereum wallet address of the user"
+                      "description": "Wallet address of the user"
                     },
-                    "avatar_url": {
+                    "avatarUrl": {
                       "type": "string",
                       "format": "uri",
                       "description": "URL to the user's avatar image"
@@ -1245,12 +1236,19 @@
                     "publicationId": {
                       "type": "string",
                       "description": "ID of the publication this user belongs to"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Display name of the user"
+                    },
+                    "bio": {
+                      "type": "string",
+                      "maxLength": 500,
+                      "description": "Brief biography of the user (max 500 characters)"
                     }
                   },
                   "required": [
                     "id",
-                    "walletAddress",
-                    "avatar_url",
                     "publicationId"
                   ],
                   "description": "User details retrieved successfully"
@@ -1342,14 +1340,6 @@
               "pattern": "^0x[a-fA-F0-9]{40}$"
             },
             "description": "Ethereum wallet address"
-          },
-          {
-            "name": "x-api-key",
-            "in": "header",
-            "schema": {
-              "type": "string",
-              "description": "API key for authenticating requests"
-            }
           }
         ],
         "responses": {
@@ -1367,9 +1357,9 @@
                     "walletAddress": {
                       "type": "string",
                       "pattern": "^0x[a-fA-F0-9]{40}$",
-                      "description": "Ethereum wallet address of the user"
+                      "description": "Wallet address of the user"
                     },
-                    "avatar_url": {
+                    "avatarUrl": {
                       "type": "string",
                       "format": "uri",
                       "description": "URL to the user's avatar image"
@@ -1377,12 +1367,19 @@
                     "publicationId": {
                       "type": "string",
                       "description": "ID of the publication this user belongs to"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Display name of the user"
+                    },
+                    "bio": {
+                      "type": "string",
+                      "maxLength": 500,
+                      "description": "Brief biography of the user (max 500 characters)"
                     }
                   },
                   "required": [
                     "id",
-                    "walletAddress",
-                    "avatar_url",
                     "publicationId"
                   ],
                   "description": "User details retrieved successfully"
@@ -1474,14 +1471,6 @@
               "pattern": "^0x[a-fA-F0-9]{40}$"
             },
             "description": "Ethereum smart contract address"
-          },
-          {
-            "name": "x-api-key",
-            "in": "header",
-            "schema": {
-              "type": "string",
-              "description": "API key for authenticating requests"
-            }
           }
         ],
         "responses": {
@@ -1499,16 +1488,16 @@
                     "contractAddress": {
                       "type": "string",
                       "pattern": "^0x[a-fA-F0-9]{40}$",
-                      "description": "Ethereum smart contract address for this token"
+                      "description": "Base contract address for the coin"
                     },
                     "symbol": {
                       "type": "string",
                       "pattern": "^[A-Z]{3,6}$",
-                      "description": "Token symbol (3-6 uppercase letters)"
+                      "description": "Token symbol"
                     },
                     "postId": {
                       "type": "string",
-                      "description": "ID of the post this token represents"
+                      "description": "ID of the post this token is associated with"
                     }
                   },
                   "required": [
@@ -1608,14 +1597,6 @@
             "description": "Ethereum smart contract address"
           },
           {
-            "name": "x-api-key",
-            "in": "header",
-            "schema": {
-              "type": "string",
-              "description": "API key for authenticating requests"
-            }
-          },
-          {
             "name": "cursor",
             "in": "query",
             "description": "Cursor for pagination",
@@ -1626,9 +1607,9 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Maximum number of items to return (1-100, default: 20)",
+            "description": "Maximum number of items to return (1-100, default: 10)",
             "schema": {
-              "default": 20,
+              "default": 10,
               "type": "integer",
               "minimum": 1,
               "maximum": 100
@@ -1651,11 +1632,11 @@
                           "walletAddress": {
                             "type": "string",
                             "pattern": "^0x[a-fA-F0-9]{40}$",
-                            "description": "Ethereum wallet address of the holder"
+                            "description": "Wallet address of the holder"
                           },
                           "userId": {
                             "type": "string",
-                            "description": "User ID if holder has a Paragraph account"
+                            "description": "Paragraph user ID if the holder is a registered user"
                           },
                           "balance": {
                             "type": "string",
@@ -1777,7 +1758,7 @@
   "info": {
     "title": "Paragraph API",
     "version": "1.0.0",
-    "description": "Public API for interacting with Paragraph publications, posts, users, and tokenized content.\n\n## Authentication\nAll endpoints require an API key passed in the `x-api-key` header.\n\n## Rate Limiting\nAPI requests are rate-limited to ensure fair usage. Contact support for higher limits.\n\n## Pagination\nList endpoints support cursor-based pagination using `cursor` and `limit` parameters.",
+    "description": "Public API for interacting with Paragraph publications, posts, users, and coined writing.\n\n## Rate Limiting\nAPI requests are rate-limited to ensure fair usage. Contact support@paragraph.com for higher limits.\n\n## Pagination\nList endpoints support cursor-based pagination using `cursor` and `limit` parameters.",
     "contact": {
       "name": "Paragraph Support",
       "email": "support@paragraph.com",
@@ -1790,12 +1771,8 @@
   },
   "servers": [
     {
-      "url": "https://api.paragraph.com/api",
+      "url": "https://dev.api.paragraph.com/api",
       "description": "Production server"
-    },
-    {
-      "url": "http://localhost:3001/api",
-      "description": "Local development server"
     }
   ],
   "tags": [
@@ -1817,18 +1794,7 @@
     }
   ],
   "security": [
-    {
-      "ApiKeyAuth": []
-    }
+    {}
   ],
-  "components": {
-    "securitySchemes": {
-      "ApiKeyAuth": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "x-api-key",
-        "description": "API key for authenticating requests"
-      }
-    }
-  }
+  "components": {}
 }
