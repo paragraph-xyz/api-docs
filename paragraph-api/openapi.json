@@ -1849,7 +1849,7 @@
         "x-codeSamples": [
           {
             "lang": "typescript",
-            "label": "List coin holders with pagination",
+            "label": "List coin holders (with pagination)",
             "source": "import { ParagraphAPI } from \"@paragraph_xyz/sdk\"\n\nconst api = new ParagraphAPI()\nconst holders = await api.getCoinHolders(\"0x123...abc\", {\n  limit: 50,\n  cursor: \"next-cursor\"\n})"
           }
         ]
