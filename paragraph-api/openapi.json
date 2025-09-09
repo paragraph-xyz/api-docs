@@ -1168,6 +1168,29 @@
                       "type": "string",
                       "maxLength": 500,
                       "description": "Brief biography of the user (max 500 characters)"
+                    },
+                    "farcaster": {
+                      "type": "object",
+                      "properties": {
+                        "username": {
+                          "type": "string",
+                          "description": "Farcaster username"
+                        },
+                        "displayName": {
+                          "type": "string",
+                          "description": "Farcaster display name"
+                        },
+                        "fid": {
+                          "type": "number",
+                          "description": "Farcaster fid"
+                        }
+                      },
+                      "required": [
+                        "username",
+                        "displayName",
+                        "fid"
+                      ],
+                      "description": "Farcaster profile information, if linked"
                     }
                   },
                   "required": [
@@ -1307,6 +1330,29 @@
                       "type": "string",
                       "maxLength": 500,
                       "description": "Brief biography of the user (max 500 characters)"
+                    },
+                    "farcaster": {
+                      "type": "object",
+                      "properties": {
+                        "username": {
+                          "type": "string",
+                          "description": "Farcaster username"
+                        },
+                        "displayName": {
+                          "type": "string",
+                          "description": "Farcaster display name"
+                        },
+                        "fid": {
+                          "type": "number",
+                          "description": "Farcaster fid"
+                        }
+                      },
+                      "required": [
+                        "username",
+                        "displayName",
+                        "fid"
+                      ],
+                      "description": "Farcaster profile information, if linked"
                     }
                   },
                   "required": [
@@ -1659,21 +1705,13 @@
     "/v1/coins/{id}/holders": {
       "get": {
         "description": "Retrieve a paginated list of holders for a coined post",
-        "summary": "List coin holders",
+        "summary": "List coin holders by ID",
         "tags": [
           "coins"
         ],
         "parameters": [
           {
             "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "contractAddress",
             "in": "path",
             "required": true,
             "schema": {
@@ -1847,7 +1885,7 @@
           {
             "lang": "typescript",
             "label": "List coin holders (with pagination)",
-            "source": "import { ParagraphAPI } from \"@paragraph_xyz/sdk\"\n\nconst api = new ParagraphAPI()\nconst holders = await api.getCoinHolders(\"S2AlaNG5Hw0NdNptmLTw\", {\n  limit: 50,\n  cursor: \"next-cursor\"\n})"
+            "source": "import { ParagraphAPI } from \"@paragraph_xyz/sdk\"\n\nconst api = new ParagraphAPI()\nconst holders = await api.getCoinHolders(\"S2AlaNG5Hw0NdNptmLTw\", {\n  limit: 25,\n  cursor: \"next-cursor\"\n})"
           }
         ]
       }
@@ -1855,7 +1893,7 @@
     "/v1/coins/contract/{contractAddress}/holders": {
       "get": {
         "description": "Retrieve a paginated list of holders for a tokenized post",
-        "summary": "List coin holders",
+        "summary": "List coin holders by contract address",
         "tags": [
           "coins"
         ],

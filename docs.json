@@ -39,19 +39,32 @@
         "openapi": "/paragraph-api/openapi.json"
       }
     ],
+  },
+  "logo": {
+    "light": "/logo/paragraph_wood.png",
+    "dark": "/logo/paragraph_light.png"
+  },
+  "navbar": {
+    "links": [
+      {
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Paragraph",
+  "colors": {
+    "primary": "#3F64F8",
+    "light": "#F6F4EE",
+    "dark": "#26251A"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "API reference",
+        "openapi": "/paragraph-api/openapi.json"
+      }
+    ],
     "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://docs.paragraph.com",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://paragraph.com/@blog",
-          "icon": "newspaper"
-        }
-      ]
+      "anchors": []
     }
   },
   "logo": {
@@ -60,6 +73,10 @@
   },
   "navbar": {
     "links": [
+      {
+        "label": "Blog",
+        "href": "https://paragraph.com/@blog"
+      },
       {
         "label": "Support",
         "href": "mailto:support@paragraph.com"
@@ -73,15 +90,46 @@
   },
   "contextual": {
     "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/mintlify",
+      "github": "https://github.com/mintlify",
+      "linkedin": "https://linkedin.com/company/mintlify"
+    }
+  }
+}
+      {
+        "label": "Support",
+        "href": "mailto:support@paragraph.com"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://dashboard.mintlify.com"
+    }
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
   },
   "footer": {
     "socials": {
