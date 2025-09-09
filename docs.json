@@ -8,6 +8,12 @@
     "dark": "#26251A"
   },
   "favicon": "/favicon.svg",
+  "redirects": [
+    {
+      "source": "/api-reference",
+      "destination": "/api-reference/publications/get-publication-by-id"
+    }
+  ],
   "navigation": {
     "tabs": [
       {
@@ -16,32 +22,14 @@
           {
             "group": "Getting started",
             "pages": [
-              "development/index",
-              "development/quickstart"
+              "development/index"
             ]
           },
           {
             "group": "Typescript SDK",
             "pages": [
-              "development/sdk",
-              "development/examples"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "development/sdk/index",
+              "development/sdk/examples"
             ]
           }
         ]
