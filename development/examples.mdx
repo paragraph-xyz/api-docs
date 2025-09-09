@@ -1,0 +1,96 @@
+---
+title: 'Code Examples'
+description: 'Common patterns and examples for using the Paragraph SDK'
+icon: 'code'
+---
+
+Explore practical examples of using the Paragraph SDK to interact with publications, posts, coins, and user profiles.
+
+## Setup
+
+Before running any examples, make sure you have the SDK installed and initialized:
+
+```typescript
+import { ParagraphAPI } from "@paragraph_xyz/sdk"
+
+const api = new ParagraphAPI()
+```
+
+## Examples
+
+### Fetching paginated posts
+
+Retrieve posts from a publication with pagination support. This example demonstrates how to fetch multiple pages of posts using the cursor-based pagination.
+
+```typescript
+/** 
+ * Given a Paragraph publication slug, fetch the first two 
+ * pages of posts.
+ */
+async function fetchParagraphPosts(slug: string) {
+  const publication = await api.getPublicationBySlug(slug)
+  console.log("Publication:", publication)
+
+  const posts = []
+
+  const firstBatch = await api.getPosts(publication.id, {})
+  posts.push(...firstBatch.items)
+
+  console.log("Posts:", firstBatch.items)
+
+  if (firstBatch.pagination.hasMore && firstBatch.pagination.cursor) {
+    const secondBatch = await api.getPosts(publication.id, { 
+      cursor: firstBatch.pagination.cursor 
+    })
+    posts.push(...secondBatch.items)
+  }
+
+  console.log(`Last ${posts.length} posts from ${slug}, out of ${firstBatch.pagination.total} posts: ${JSON.stringify(firstBatch.items)}`)
+}
+```
+
+### Working with coins and holders
+
+Fetch coin information and holder data associated with a specific post. This example shows how to retrieve monetization details for content.
+
+```typescript
+/**
+ * Given a publication & post slug, fetch coin & holders.
+ */
+async function fetchCoinFromPost(publicationSlug: string, postSlug: string) {
+  const publication = await api.getPublicationBySlug(publicationSlug)
+  const publicationId = publication.id
+
+  const post = await api.getPostBySlug(publicationId, postSlug)
+
+  if (post.coinId) {
+    const [coin, holders] = await Promise.all([
+      api.getCoin(post.coinId), 
+      api.getCoinHolders(post.coinId)
+    ])
+    console.log("Fetched coin & holders from post:", coin, holders)
+  }
+}
+```
+
+### User profile lookup
+
+Retrieve user profile information by wallet address, including any associated Farcaster profiles.
+
+```typescript
+/**
+ * Given a wallet address, fetch the user profile including 
+ * any associated Farcaster profile.
+ */
+async function getUserProfileByWallet(walletAddress: string) {
+  const user = await api.getUserByWallet(walletAddress)
+
+  console.log("User profile:", user)
+}
+```
+
+## Next steps
+
+- Explore the full [API Reference](/api-reference/) for detailed endpoint documentation
+- View the [SDK repository](https://github.com/paragraph-xyz/paragraph-sdk-js) for more examples
+- Check out the [NPM package](https://www.npmjs.com/package/@paragraph_xyz/sdk) for version information
