@@ -2121,5 +2121,10 @@
   "security": [
     {}
   ],
-  "components": {}
+  "components": {},
+  "x-mint": {
+    "mcp": {
+      "enabled": true
+    }
+  }
 }
