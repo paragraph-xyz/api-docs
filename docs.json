@@ -22,7 +22,7 @@
           {
             "group": "Getting started",
             "pages": [
-              "development/index"
+              "index"
             ]
           },
           {
@@ -48,7 +48,7 @@
     "links": [
 
       {
-        "label": "Blog",
+        "label": "Newsletter",
         "href": "https://paragraph.com/@blog"
       },
       {
