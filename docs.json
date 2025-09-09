@@ -118,24 +118,6 @@
         ]
       },
       {
-        "tab": "Development",
-        "groups": [
-          {
-            "group": "Getting started",
-            "pages": [
-              "development/index"
-            ]
-          },
-          {
-            "group": "TypeScript SDK",
-            "pages": [
-              "development/sdk/index",
-              "development/sdk/examples"
-            ]
-          }
-        ]
-      },
-      {
         "tab": "API reference",
         "openapi": "/paragraph-api/openapi.json"
       }
