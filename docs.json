@@ -22,7 +22,8 @@
           {
             "group": "Getting started",
             "pages": [
-              "index"
+              "index",
+              "development/ai/index"
             ]
           },
           {
