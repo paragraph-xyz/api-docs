@@ -60,8 +60,8 @@ Last 2 posts from @blog, out of 39 posts: [
     "json": "{\"type\":\"doc\",\"content\":[{\"type\":\"heading\",\"attrs\":{\"textAlign\":\"left\",\"level\":3}...[truncated]",
     "markdown": "### Why coins?\n\nIt's been a little over a month since we [shipped]...[truncated]",
     "coinId": "MTmpnfHJWMTcd84d9kWB",
-    "publishedAt": "1756840209640",
-    "updatedAt": "1756949208966"
+    "publishedAt": "2025-09-03T14:30:09.640Z",
+    "updatedAt": "2025-09-04T20:33:28.966Z"
   },
 ]
 
@@ -85,7 +85,10 @@ async function fetchCoinFromPost(publicationSlug: string, postSlug: string) {
   const publication = await api.getPublicationBySlug(publicationSlug)
   const publicationId = publication.id
 
-  const post = await api.getPostBySlug(publicationId, postSlug)
+  const post = await api.getPost({
+    publicationId: publicationId,
+    postSlug: postSlug
+  })
 
   if (post.coinId) {
     const [coin, holders] = await Promise.all([
