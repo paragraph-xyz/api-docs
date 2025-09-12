@@ -29,8 +29,6 @@
             "group": "Getting started",
             "pages": [
               "getting-started/create-account",
-              "getting-started/connect-wallet",
-              "getting-started/sign-in-with-farcaster",
               "getting-started/import-publication",
               "getting-started/cross-posting",
               "getting-started/explore-feed",
