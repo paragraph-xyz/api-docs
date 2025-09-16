@@ -32,6 +32,12 @@
               "development/sdk/index",
               "development/sdk/examples"
             ]
+          },
+          {
+            "group": "Coins",
+            "pages": [
+              "coins/index"
+            ]
           }
         ]
       },

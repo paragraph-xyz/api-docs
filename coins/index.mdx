@@ -1,0 +1,290 @@
+---
+title: "Listening to onchain events"
+description: "Index and react to Doppler (v3 → v4) events for Paragraph-launched coins."
+icon: "diamond"
+---
+
+<Info>
+This page is for integrators who want to **listen to on-chain events** to discover and track Paragraph coins.
+Today, Paragraph coins are **created via [Doppler](http://docs.doppler.lol/)**. Paragraph currently deploys on **Doppler v3** and is migrating to **Doppler v4**.
+You’ll primarily listen to **Airlock** (factory) events, then follow the **price-discovery surface** (Uniswap v3/v2 for v3, the **Doppler Hook** for v4).
+</Info>
+
+<Info>
+Note: We are building this functionality into our [SDK](http://localhost:3000/development/sdk) to make coin interactions easier.
+
+</Info>
+
+## Overview
+
+Paragraph coins are deployed via [Doppler](https://docs.doppler.lol).
+
+To integrate with these coins, you have several options:
+
+- Listen to the onchain events
+- Query the [Doppler indexer](https://docs.doppler.lol/indexer/overview) directly via GraphQL
+- [coming soon] Use the SDK to watch the onchain events
+- [coming soon] Listen to our own contracts
+
+The remainder of this document focuses on listening to the onchain events, as it's the most complex.
+
+## TL;DR
+
+1. **Subscribe to `Airlock.Create`** (v3 & v4) on Base.
+2. **Verify it’s a Paragraph coin**: `Airlock.getAssetData(asset).integrator === PARAGRAPH_INTEGRATOR[chainId]`.
+3. Persist `asset` (ERC-20), `numeraire`, `initializer`, and `poolOrHook`.
+4. **If v3**: `poolOrHook` is a **Uniswap v3 pool** → track pool events
+5. **If v4**: `poolOrHook` is the **Doppler Hook** → track `Swap`, `Rebalance`, `EarlyExit`, `InsufficientProceeds`.
+6. (Optional) Track **`Airlock.Collect`** for protocol/integrator fee withdrawals.
+
+---
+
+## Supported networks & addresses
+
+Use the Doppler SDK address maps to resolve canonical contracts:
+
+```ts
+// v3 (current)
+import { DOPPLER_V3_ADDRESSES } from 'doppler-v3-sdk'
+// v4 (migration target)
+import { DOPPLER_V4_ADDRESSES } from 'doppler-v4-sdk'
+```
+
+**Paragraph integrator (for verification via `getAssetData(asset).integrator`):**
+- **Base Mainnet (8453):** `0x805F3d7A8F8E50d8A5a444e8231BBfb5F97d5196`
+- **Base Sepolia (84532):** `0x5902f7E444EAc22BE910B999DDD14cafc9d9D079`
+*(Historic test you may see in old mainnet data: `0x797B89c60E561B5ff345D92E75344A106De4e531`)*
+
+**WETH on Base (common numeraire):** `0x4200000000000000000000000000000000000006`
+
+---
+
+## What to listen to
+
+### Airlock (common to v3 & v4)
+
+```solidity
+event Create(
+  address asset,                 // ERC-20 address of the coin
+  address indexed numeraire,     // paired token (e.g., WETH)
+  address initializer,           // v3 or v4 initializer contract
+  address poolOrHook             // v3: Uniswap v3 pool; v4: Doppler Hook
+);
+
+event Collect(address indexed to, address indexed token, uint256 amount); // fee withdrawal
+
+// Public getter used after Create to verify Paragraph integrator, etc.
+function getAssetData(address asset) view
+  returns (
+    address numeraire,
+    address timelock,
+    address governance,
+    address liquidityMigrator,
+    address poolInitializer,
+    address pool,
+    address migrationPool,
+    uint256 numTokensToSell,
+    uint256 totalSupply,
+    address integrator  // ← check this equals PARAGRAPH_INTEGRATOR
+  );
+```
+
+> **Identify Paragraph coins**
+> Primary: `getAssetData(asset).integrator === PARAGRAPH_INTEGRATOR[chainId]`
+> Secondary: `DERC20(asset).tokenURI()` points to `https://api.paragraph.com/coins/metadata/<id>`.
+
+### Price-discovery surface (differs by version)
+
+- **v3 (Uniswap v3)**
+  - From `Create`, `poolOrHook` is the **Uniswap v3 pool**.
+  - Track pool events: **`Swap`**, **`Mint`**, **`Burn`**.
+  - Note: Paragraph uses a **no-op migrator** (`0x6ddfed58d238ca3195e49d8ac3d4cea6386e5c33`), so no migration occurs.
+
+- **v4 (Uniswap v4 + Doppler Hook)**
+  - From `Create`, `poolOrHook` is the **Doppler Hook**. Track these hook events:
+  ```solidity
+  event Swap(int24 currentTick, uint256 totalProceeds, uint256 totalTokensSold);
+  event Rebalance(int24 currentTick, int24 tickLower, int24 tickUpper, uint256 epoch);
+  event EarlyExit(uint256 epoch);            // cap reached; sale ends early
+  event InsufficientProceeds();              // refund/buyback phase at avg clearing price
+  ```
+  - **Progress / price:** normalize decimals and approximate
+    `avgPrice (numeraire per asset) ≈ totalProceeds / totalTokensSold`
+
+---
+
+## Quickstart (indexer flow)
+
+<Steps>
+  <Step title="Subscribe to Airlock.Create (v3 & v4)">
+    For each chain, subscribe to `Airlock.Create` on both the v3 and v4 Airlock addresses (from the SDK maps).
+  </Step>
+  <Step title="Verify Paragraph coin">
+    Read `getAssetData(asset).integrator` and compare to the Paragraph integrator address for the chain.
+  </Step>
+  <Step title="Persist core pointers">
+    Store `asset` (ERC-20), `numeraire`, `initializer`, and `poolOrHook`. These are your canonical references.
+  </Step>
+  <Step title="Route by version">
+    If `initializer === DOPPLER_V3_ADDRESSES[chainId].lockableV3Initializer` → **v3**. Otherwise treat as **v4**.
+  </Step>
+  <Step title="Track discovery surface">
+    - **v3:** follow Uniswap v3 pool events
+    - **v4:** subscribe to the Doppler Hook’s `Swap`, `Rebalance`, `EarlyExit`, `InsufficientProceeds`.
+  </Step>
+  <Step title="(Optional) Fees">
+    Listen for `Airlock.Collect` if you want to surface protocol/integrator fee withdrawals.
+  </Step>
+</Steps>
+
+---
+
+## Minimal watcher (TypeScript + viem)
+
+```ts
+import { createPublicClient, http, parseAbi, decodeEventLog } from 'viem'
+import { base } from 'viem/chains'
+import { DOPPLER_V3_ADDRESSES } from 'doppler-v3-sdk'
+import { DOPPLER_V4_ADDRESSES } from 'doppler-v4-sdk'
+
+const PARAGRAPH_INTEGRATOR: Record<number, `0x${string}`> = {
+  8453:  '0x805F3d7A8F8E50d8A5a444e8231BBfb5F97d5196', // Base mainnet
+  84532: '0x5902f7E444EAc22BE910B999DDD14cafc9d9D079', // Base Sepolia
+}
+
+const airlockAbi = parseAbi([
+  'event Create(address asset, address indexed numeraire, address initializer, address poolOrHook)',
+  'event Migrate(address indexed asset, address indexed pool)',
+  'function getAssetData(address asset) view returns (address,address,address,address,address,address,address,uint256,uint256,address)',
+])
+
+const erc20Abi = parseAbi([
+  'function name() view returns (string)',
+  'function symbol() view returns (string)',
+  'function decimals() view returns (uint8)',
+  'function tokenURI() view returns (string)',
+])
+
+const dopplerHookAbi = parseAbi([
+  'event Swap(int24 currentTick, uint256 totalProceeds, uint256 totalTokensSold)',
+  'event Rebalance(int24 currentTick, int24 tickLower, int24 tickUpper, uint256 epoch)',
+  'event EarlyExit(uint256 epoch)',
+  'event InsufficientProceeds()',
+])
+
+const client = createPublicClient({ chain: base, transport: http() })
+
+// Index both v3 + v4 Airlocks for Base; add other chains similarly
+const AIRLOCKS = [
+  DOPPLER_V3_ADDRESSES[base.id].airlock,
+  DOPPLER_V4_ADDRESSES[base.id].airlock,
+] as const
+
+async function onCreate(log: any) {
+  const { args } = decodeEventLog({
+    abi: airlockAbi,
+    data: log.data,
+    topics: log.topics
+  }) as any
+
+  const asset = args.asset as `0x${string}`
+  const numeraire = args.numeraire as `0x${string}`
+  const initializer = args.initializer as `0x${string}`
+  const poolOrHook = args.poolOrHook as `0x${string}`
+
+  // Verify Paragraph coin
+  const assetData = await client.readContract({
+    address: log.address as `0x${string}`,
+    abi: airlockAbi,
+    functionName: 'getAssetData',
+    args: [asset],
+  })
+  const integrator = assetData[9] as `0x${string}`
+  if (integrator.toLowerCase() !== PARAGRAPH_INTEGRATOR[base.id].toLowerCase()) return
+
+  // Optional: fetch token metadata
+  const [name, symbol, decimals, tokenURI] = await Promise.all([
+    client.readContract({ address: asset, abi: erc20Abi, functionName: 'name' }),
+    client.readContract({ address: asset, abi: erc20Abi, functionName: 'symbol' }),
+    client.readContract({ address: asset, abi: erc20Abi, functionName: 'decimals' }),
+    client.readContract({ address: asset, abi: erc20Abi, functionName: 'tokenURI' }).catch(() => ''),
+  ])
+
+  // Persist pointers
+  console.log({
+    asset, numeraire, initializer, poolOrHook,
+    name, symbol, decimals, tokenURI
+  })
+
+  // Route by version
+  const v3Initializer = DOPPLER_V3_ADDRESSES[base.id].lockableV3Initializer
+  const isV3 = initializer.toLowerCase() === v3Initializer.toLowerCase()
+
+  if (isV3) {
+    // V3: poolOrHook is Uniswap V3 pool — track Uniswap events here
+    // e.g., subscribe to the pool's Swap/Mint/Burn with its ABI
+    return
+  }
+
+  // V4: poolOrHook is the Doppler Hook — subscribe to sale lifecycle
+  client.watchEvent({
+    address: poolOrHook,
+    abi: dopplerHookAbi,
+    eventName: 'Swap',
+    onLogs: (logs) => {
+      for (const l of logs) {
+        const { currentTick, totalProceeds, totalTokensSold } = l.args as any
+        console.log('Hook Swap', { currentTick, totalProceeds, totalTokensSold })
+        // avgPrice ≈ totalProceeds / totalTokensSold (normalize decimals)
+      }
+    }
+  })
+}
+
+export async function start() {
+  for (const airlock of AIRLOCKS) {
+    client.watchEvent({
+      address: airlock,
+      abi: airlockAbi,
+      eventName: 'Create',
+      onLogs: (logs) => logs.forEach(onCreate),
+    })
+  }
+}
+
+start()
+```
+
+<Warning>
+**Reorg safety:** range-scan historical logs and delay finalization by ~10–20 blocks before marking records as confirmed.
+</Warning>
+
+---
+
+## Event glossary (quick reference)
+
+- **Airlock.Create** → canonical birth of a coin. Source of truth for:
+  - `asset` (ERC-20), `numeraire`, `initializer`, `poolOrHook` (v3 pool or v4 hook).
+- **Doppler Hook (v4):**
+  - `Swap` → updates cumulative `totalProceeds` & `totalTokensSold`.
+  - `Rebalance` → epoch step; new slug placement/range.
+  - `EarlyExit` → cap reached; sale ends early.
+  - `InsufficientProceeds` → refund/buyback phase at average clearing price.
+- **Airlock.Collect** → fee withdrawals by protocol/integrator.
+
+---
+
+## Practical tips
+
+- **Paragraph detection (recommended):**
+  1) `getAssetData(asset).integrator == PARAGRAPH_INTEGRATOR[chainId]`
+  2) `DERC20.tokenURI()` starts with `https://api.paragraph.com/coins/metadata/…`
+- **Version detection:** compare `initializer` from `Create` against known v3/v4 initializer addresses from the SDK maps.
+- **Decimals:** normalize both the **asset** and the **numeraire** for any price math.
+- **State reads:** you can always query Doppler contracts directly (e.g., v4 hook public state) to reconstruct state between events.
+
+---
+
+## What changes with v4?
+
+- `Airlock.Create` remains your discovery source, but **`poolOrHook`** now points to a **hook** (not a V3 pool).
