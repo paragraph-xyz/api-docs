@@ -1,0 +1,87 @@
+---
+title: "Setting up a custom domain"
+description: "Overview of how to set up a custom domain for your publication."
+---
+
+# Custom domains
+
+Give your publication polished branding and better SEO by setting up a custom domain. Instead of `paragraph.xyz/@username`, your publication can live at `example.com` or `blog.example.com`.
+
+Activating a custom domain is a one-time \$50 purchase from your [publication settings](https://paragraph.com/settings/publication/blog).
+
+---
+
+## Requirements
+
+Before you begin, make sure you:
+
+- Own a domain through a registrar (GoDaddy, Namecheap, Cloudflare, etc.).
+- Unlock the feature in Publication Settings (one-time \$50 fee).
+- Have access to your DNS dashboard.
+
+---
+
+## DNS configuration
+
+### Root domains (example.com)
+
+| Type | Name                                  | Value          |
+| ---- | ------------------------------------- | -------------- |
+| A    | @                                     | 76.76.21.21    |
+| TXT  | Provided in your Publication Settings | Provided value |
+
+### Subdomains (blog.example.com)
+
+| Type  | Name                                  | Value          |
+| ----- | ------------------------------------- | -------------- |
+| CNAME | blog                                  | paragraph.xyz  |
+| TXT   | Provided in your Publication Settings | Provided value |
+
+---
+
+## Verification
+
+1. Add your domain in **Publication Settings**.
+2. Copy the **TXT record** shown and add it at your registrar.
+3. Add the required **A** (or **CNAME**) record.
+4. Wait at least 30 minutes, then click the refresh (↻) button in Paragraph.
+5. Once verified, your publication will load at your new domain.
+
+DNS propagation can take up to **24–48 hours**, though most work within a few hours.
+
+---
+
+## What happens to your old URL?
+
+We set up a **permanent redirect** from your old `paragraph.xyz` URL to your new custom domain. Search engines will follow the redirect, so your SEO won’t be harmed.
+
+---
+
+## Troubleshooting
+
+### Common issues
+
+- **Unverified domain** → make sure TXT record matches exactly, wait for propagation, click refresh.
+- **404 error** → verification not complete. Double-check your DNS records, then refresh.
+- **Cloudflare users** → turn off the orange cloud (DNS-only mode).
+
+### Timeline expectations
+
+| Time        | What to expect                        |
+| ----------- | ------------------------------------- |
+| 0–30 min    | Changes propagating, may not work yet |
+| 30 min–2 hr | Most domains begin resolving          |
+| 2–24 hr     | Should be working for nearly everyone |
+| 24–48 hr    | Contact support if still not working  |
+
+---
+
+## Still having trouble?
+
+Before reaching out, please gather:
+
+- Screenshots of your DNS settings at your registrar
+- Screenshot of your Paragraph domain settings
+- The exact error message you see
+
+Then email us at [hello@paragraph.com](mailto:hello@paragraph.com) and we’ll help get you set up.
