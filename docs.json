@@ -73,6 +73,7 @@
           {
             "group": "Managing your account",
             "pages": [
+              "account/manage-account",
               "account/profile",
               "account/social",
               "account/subscriptions"
