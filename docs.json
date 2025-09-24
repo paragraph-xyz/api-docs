@@ -82,13 +82,8 @@
           {
             "group": "Mirror to Paragraph Migration",
             "pages": [
-              "migration/overview",
-              "migration/access-account",
-              "migration/what-moved-where",
-              "migration/redirects-seo",
-              "migration/duplicate-accounts",
-              "migration/faqs"
-            ]
+              "mirror-migration/overview"
+              ]
           },
           {
             "group": "Troubleshooting and FAQ",
