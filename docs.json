@@ -44,8 +44,9 @@
               "publish/distribution",
               "publish/seo",
               "publish/custom-domains",
-              "publish/exports-deletion",
-              "publish/multiple-publications"
+              "publish/team",
+              "publish/multiple-publications",
+              "publish/exports-deletion"
             ]
           },
           {
@@ -67,14 +68,6 @@
               "earn/post-coins",
               "earn/remixing",
               "earn/coin-pairing"
-            ]
-          },
-          {
-            "group": "Discover and support writers",
-            "pages": [
-              "readers/create-account",
-              "readers/support-with-coins",
-              "readers/notifications-privacy"
             ]
           },
           {
