@@ -86,17 +86,6 @@
               ]
           },
           {
-            "group": "Troubleshooting and FAQ",
-            "pages": [
-              "troubleshooting/login-wallet",
-              "troubleshooting/email-delivery",
-              "troubleshooting/miniapp",
-              "troubleshooting/cross-posting",
-              "troubleshooting/billing-payouts",
-              "troubleshooting/contact-support"
-            ]
-          },
-          {
             "group": "Changelog",
             "pages": [
               "changelog/index"
