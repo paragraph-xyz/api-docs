@@ -71,6 +71,14 @@
             ]
           },
           {
+            "group": "Managing your account",
+            "pages": [
+              "account/profile",
+              "account/social",
+              "account/subscriptions"
+              ]
+          },
+          {
             "group": "Moving from Mirror to Paragraph",
             "pages": [
               "migration/overview",
