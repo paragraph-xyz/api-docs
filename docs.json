@@ -80,7 +80,7 @@
               ]
           },
           {
-            "group": "Moving from Mirror to Paragraph",
+            "group": "Mirror to Paragraph Migration",
             "pages": [
               "migration/overview",
               "migration/access-account",
