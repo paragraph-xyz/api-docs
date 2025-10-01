@@ -18,6 +18,9 @@
     "tabs": [
       {
         "tab": "Documentation",
+        "pages": [
+          "index"
+        ],
         "groups": [
           {
             "group": "Getting started",
