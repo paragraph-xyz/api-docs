@@ -52,8 +52,7 @@
               "grow/embeds",
               "grow/automated-emails",
               "grow/notifications",
-              "grow/analytics",
-              "grow/google-analytics"
+              "grow/analytics"
             ]
           },
           {
