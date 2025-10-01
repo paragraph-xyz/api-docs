@@ -20,12 +20,6 @@
         "tab": "Documentation",
         "groups": [
           {
-            "group": "Introduction",
-            "pages": [
-              "introduction/overview"
-            ]
-          },
-          {
             "group": "Getting started",
             "pages": [
               "getting-started/create-account",
