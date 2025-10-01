@@ -5,14 +5,11 @@ icon: "diamond"
 ---
 
 <Info>
-This page is for integrators who want to **listen to on-chain events** to discover and track Paragraph coins.
-Today, Paragraph coins are **created via [Doppler](http://docs.doppler.lol/)**. Paragraph currently deploys on **Doppler v3** and is migrating to **Doppler v4**.
-You’ll primarily listen to **Airlock** (factory) events, then follow the **price-discovery surface** (Uniswap v3/v2 for v3, the **Doppler Hook** for v4).
+  This page is for integrators who want to **listen to on-chain events** to discover and track Paragraph coins. Today, Paragraph coins are [**created via Doppler**](http://docs.doppler.lol/). Paragraph currently deploys on **Doppler v3** and is migrating to **Doppler v4**. You’ll primarily listen to **Airlock** (factory) events, then follow the **price-discovery surface** (Uniswap v3/v2 for v3, the **Doppler Hook** for v4).
 </Info>
 
 <Info>
-Note: We are building this functionality into our [SDK](http://localhost:3000/development/sdk) to make coin interactions easier.
-
+  Note: We are building this functionality into our [SDK](http://localhost:3000/development/sdk) to make coin interactions easier.
 </Info>
 
 ## Overview
@@ -30,7 +27,7 @@ The remainder of this document focuses on listening to the onchain events, as it
 
 ## TL;DR
 
-1. **Subscribe to `Airlock.Create`** (v3 & v4) on Base.
+1. **`Subscribe to Airlock.Create`** (v3 & v4) on Base.
 2. **Verify it’s a Paragraph coin**: `Airlock.getAssetData(asset).integrator === PARAGRAPH_INTEGRATOR[chainId]`.
 3. Persist `asset` (ERC-20), `numeraire`, `initializer`, and `poolOrHook`.
 4. **If v3**: `poolOrHook` is a **Uniswap v3 pool** → track pool events
@@ -50,10 +47,10 @@ import { DOPPLER_V3_ADDRESSES } from 'doppler-v3-sdk'
 import { DOPPLER_V4_ADDRESSES } from 'doppler-v4-sdk'
 ```
 
-**Paragraph integrator (for verification via `getAssetData(asset).integrator`):**
+**`Paragraph integrator (for verification via getAssetData(asset).integrator):`**
+
 - **Base Mainnet (8453):** `0x805F3d7A8F8E50d8A5a444e8231BBfb5F97d5196`
-- **Base Sepolia (84532):** `0x5902f7E444EAc22BE910B999DDD14cafc9d9D079`
-*(Historic test you may see in old mainnet data: `0x797B89c60E561B5ff345D92E75344A106De4e531`)*
+- **Base Sepolia (84532):** `0x5902f7E444EAc22BE910B999DDD14cafc9d9D079` _`(Historic test you may see in old mainnet data: 0x797B89c60E561B5ff345D92E75344A106De4e531)`_
 
 **WETH on Base (common numeraire):** `0x4200000000000000000000000000000000000006`
 
@@ -89,9 +86,7 @@ function getAssetData(address asset) view
   );
 ```
 
-> **Identify Paragraph coins**
-> Primary: `getAssetData(asset).integrator === PARAGRAPH_INTEGRATOR[chainId]`
-> Secondary: `DERC20(asset).tokenURI()` points to `https://api.paragraph.com/coins/metadata/<id>`.
+> **Identify Paragraph coins** Primary: `getAssetData(asset).integrator === PARAGRAPH_INTEGRATOR[chainId]` Secondary: `DERC20(asset).tokenURI()` points to `https://api.paragraph.com/coins/metadata/<id>`.
 
 ### Price-discovery surface (differs by version)
 
@@ -99,17 +94,16 @@ function getAssetData(address asset) view
   - From `Create`, `poolOrHook` is the **Uniswap v3 pool**.
   - Track pool events: **`Swap`**, **`Mint`**, **`Burn`**.
   - Note: Paragraph uses a **no-op migrator** (`0x6ddfed58d238ca3195e49d8ac3d4cea6386e5c33`), so no migration occurs.
-
 - **v4 (Uniswap v4 + Doppler Hook)**
   - From `Create`, `poolOrHook` is the **Doppler Hook**. Track these hook events:
+
   ```solidity
   event Swap(int24 currentTick, uint256 totalProceeds, uint256 totalTokensSold);
   event Rebalance(int24 currentTick, int24 tickLower, int24 tickUpper, uint256 epoch);
   event EarlyExit(uint256 epoch);            // cap reached; sale ends early
   event InsufficientProceeds();              // refund/buyback phase at avg clearing price
   ```
-  - **Progress / price:** normalize decimals and approximate
-    `avgPrice (numeraire per asset) ≈ totalProceeds / totalTokensSold`
+  - **Progress / price:** normalize decimals and approximate `avgPrice (numeraire per asset) ≈ totalProceeds / totalTokensSold`
 
 ---
 
@@ -256,7 +250,7 @@ start()
 ```
 
 <Warning>
-**Reorg safety:** range-scan historical logs and delay finalization by ~10–20 blocks before marking records as confirmed.
+  **Reorg safety:** range-scan historical logs and delay finalization by ~10–20 blocks before marking records as confirmed.
 </Warning>
 
 ---
@@ -277,8 +271,8 @@ start()
 ## Practical tips
 
 - **Paragraph detection (recommended):**
-  1) `getAssetData(asset).integrator == PARAGRAPH_INTEGRATOR[chainId]`
-  2) `DERC20.tokenURI()` starts with `https://api.paragraph.com/coins/metadata/…`
+  1. `getAssetData(asset).integrator == PARAGRAPH_INTEGRATOR[chainId]`
+  2. `DERC20.tokenURI()` starts with `https://api.paragraph.com/coins/metadata/…`
 - **Version detection:** compare `initializer` from `Create` against known v3/v4 initializer addresses from the SDK maps.
 - **Decimals:** normalize both the **asset** and the **numeraire** for any price math.
 - **State reads:** you can always query Doppler contracts directly (e.g., v4 hook public state) to reconstruct state between events.

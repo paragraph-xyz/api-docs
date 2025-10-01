@@ -1,9 +1,8 @@
 ---
 title: "Developing with AI & LLMs"
 description: "Accelerate development with AI and LLMs using Paragraph's API."
-icon: 'asterisk'
+icon: "asterisk"
 ---
-
 
 This guide covers best practices for using AI and Large Language Models (LLMs) to accelerate your development workflow with Paragraph's API.
 
@@ -30,6 +29,7 @@ claude mcp add --transport http paragraph https://paragraph.mintlify.app/mcp
 ```
 
 Once configured, Claude Code can:
+
 - Search Paragraph documentation directly
 - Make API calls with proper authentication
 - Access real-time API information
@@ -40,6 +40,7 @@ Once configured, Claude Code can:
 ### 1. Provide Clear Context
 
 When prompting AI tools, include:
+
 - Specific API endpoints you're working with
 - Example responses or data structures
 - Your programming language and framework
@@ -48,6 +49,7 @@ When prompting AI tools, include:
 ### 2. Validate Generated Code
 
 Always review AI-generated code for:
+
 - **Error Handling**: Add proper error handling for API responses
 - **Rate Limiting**: Implement appropriate rate limiting and retry logic
 - **Type Safety**: Verify types match the API's expected request/response formats
@@ -61,18 +63,21 @@ Always review AI-generated code for:
 ### 4. Common Prompting Patterns
 
 #### For API Integration
+
 ```
 "Help me integrate Paragraph's [endpoint name] endpoint in [language/framework].
 I need to [specific use case]. Include error handling and type definitions."
 ```
 
 #### For Debugging
+
 ```
 "I'm getting [error message] when calling Paragraph's [endpoint].
 Here's my code: [code snippet]. What's wrong?"
 ```
 
 #### For Data Modeling
+
 ```
 "Based on Paragraph's API, help me create [language] models/interfaces
 for [specific data types] with proper type annotations."
@@ -91,6 +96,7 @@ for [specific data types] with proper type annotations."
 ## Troubleshooting
 
 If AI-generated code isn't working:
+
 - Verify you're using the latest API version
 - Check that all required headers are included
 - Ensure proper JSON formatting in request bodies
