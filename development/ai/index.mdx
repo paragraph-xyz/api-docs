@@ -1,0 +1,109 @@
+---
+title: "Developing with AI & LLMs"
+description: "Accelerate development with AI and LLMs using Paragraph's API."
+---
+
+This guide covers best practices for using AI and Large Language Models (LLMs) to accelerate your development workflow with Paragraph's API.
+
+## Quick Context for LLMs
+
+When working with AI assistants like Claude, ChatGPT, or Cursor, you can provide comprehensive API context by sharing our full documentation:
+
+```
+https://paragraph.com/docs/llms-full.txt
+```
+
+Simply paste this URL or its contents into your LLM conversation to give it complete knowledge of Paragraph's API endpoints, data models, and capabilities.
+
+## MCP Server Integration
+
+For a more integrated experience with LLMs, you can set up the Paragraph MCP (Model Context Protocol) server. This allows direct interacttion with the API, and the ability to search documentation.
+
+### Installation
+
+Run the following command to add the Paragraph MCP server to Claude Code. Other AI clients are similar:
+
+```bash
+claude mcp add --transport http paragraph https://paragraph.mintlify.app/mcp
+```
+
+Once configured, Claude Code can:
+
+- Search Paragraph documentation directly
+- Make API calls with proper authentication
+- Access real-time API information
+- Generate code with up-to-date API knowledge
+
+## Best Practices for AI-Assisted Development
+
+### 1. Provide Clear Context
+
+When prompting AI tools, include:
+
+- Specific API endpoints you're working with
+- Example responses or data structures
+- Your programming language and framework
+- Any authentication requirements
+
+### 2. Validate Generated Code
+
+Always review AI-generated code for:
+
+- **Error Handling**: Add proper error handling for API responses
+- **Rate Limiting**: Implement appropriate rate limiting and retry logic
+- **Type Safety**: Verify types match the API's expected request/response formats
+
+### 3. Iterative Development
+
+- Start with simple API calls and gradually add complexity
+- Test each integration point before moving to the next
+- Use the AI to explain error messages and suggest fixes
+
+### 4. Common Prompting Patterns
+
+#### For API Integration
+
+```
+"Help me integrate Paragraph's [endpoint name] endpoint in [language/framework].
+I need to [specific use case]. Include error handling and type definitions."
+```
+
+#### For Debugging
+
+```
+"I'm getting [error message] when calling Paragraph's [endpoint].
+Here's my code: [code snippet]. What's wrong?"
+```
+
+#### For Data Modeling
+
+```
+"Based on Paragraph's API, help me create [language] models/interfaces
+for [specific data types] with proper type annotations."
+```
+
+## Example Workflow
+
+1. **Initial Setup**: Share the llms-full.txt context with your AI assistant
+2. **Describe Your Goal**: Explain what you want to build with Paragraph's API
+3. **Generate Boilerplate**: Have the AI create initial client setup and authentication
+4. **Implement Features**: Work through each API endpoint you need
+5. **Add Error Handling**: Ask the AI to add comprehensive error handling
+6. **Create Tests**: Generate test cases for your integration
+7. **Optimize**: Request performance improvements and best practices
+
+## Troubleshooting
+
+If AI-generated code isn't working:
+
+- Verify you're using the latest API version
+- Check that all required headers are included
+- Ensure proper JSON formatting in request bodies
+- Review rate limits and implement appropriate delays
+
+## Additional Resources
+
+- [API Reference](/api-reference) - Complete endpoint documentation
+- [Authentication Guide](/api-reference/authentication) - API key setup and usage
+- [Rate Limits](/api-reference/rate-limits) - Understanding and handling rate limits
+- [SDKs](/sdks) - Official client libraries for various languages
