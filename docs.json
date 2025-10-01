@@ -17,13 +17,77 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Development",
+        "tab": "Documentation",
         "groups": [
           {
             "group": "Getting started",
             "pages": [
-              "index",
-              "development/ai/index"
+              "getting-started/create-account",
+              "getting-started/import-publication",
+              "getting-started/cross-posting",
+              "getting-started/main-areas"
+            ]
+          },
+          {
+            "group": "Writing and publishing",
+            "pages": [
+              "publish/setup-publication",
+              "publish/themes",
+              "publish/sections",
+              "publish/editor",
+              "publish/distribution",
+              "publish/seo",
+              "publish/custom-domains",
+              "publish/team",
+              "publish/multiple-publications",
+              "publish/export"
+            ]
+          },
+          {
+            "group": "Grow your readers",
+            "pages": [
+              "grow/discovery",
+              "grow/recommendations",
+              "grow/farcaster-miniapp",
+              "grow/embeds",
+              "grow/automated-emails",
+              "grow/notifications",
+              "grow/analytics"
+            ]
+          },
+          {
+            "group": "Ways to earn on Paragraph",
+            "pages": [
+              "earn/post-coins",
+              "earn/remix"
+            ]
+          },
+          {
+            "group": "Managing your account",
+            "pages": [
+              "account/manage-account",
+              "account/profile",
+              "account/social",
+              "account/subscriptions"
+            ]
+          },
+          {
+            "group": "Mirror to Paragraph Migration",
+            "pages": [
+              "mirror-migration/index"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Development",
+        "groups": [
+          {
+            "group": "Developer onboarding",
+            "pages": [
+              "development/api-sdk-overview",
+              "development/developing-with-ai-llm",
+              "development/listening-to-onchain-events"
             ]
           },
           {
@@ -31,12 +95,6 @@
             "pages": [
               "development/sdk/index",
               "development/sdk/examples"
-            ]
-          },
-          {
-            "group": "Coins",
-            "pages": [
-              "coins/index"
             ]
           }
         ]
