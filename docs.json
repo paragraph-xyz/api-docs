@@ -76,12 +76,6 @@
             "pages": [
               "mirror-migration/index"
             ]
-          },
-          {
-            "group": "Changelog",
-            "pages": [
-              "changelog/index"
-            ]
           }
         ]
       },
