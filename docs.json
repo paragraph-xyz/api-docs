@@ -77,13 +77,13 @@
               "account/profile",
               "account/social",
               "account/subscriptions"
-              ]
+            ]
           },
           {
             "group": "Mirror to Paragraph Migration",
             "pages": [
               "mirror-migration/overview"
-              ]
+            ]
           },
           {
             "group": "Changelog",
@@ -93,13 +93,15 @@
           }
         ]
       },
-       {
+      {
         "tab": "Development",
         "groups": [
           {
             "group": "Getting started",
             "pages": [
-              "index"
+              "development/api-sdk-overview",
+              "development/developing-with-ai-llm",
+              "development/listening-to-onchain-events"
             ]
           },
           {
