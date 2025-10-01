@@ -7,7 +7,7 @@
     "light": "#F6F4EE",
     "dark": "#26251A"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.ico",
   "redirects": [
     {
       "source": "/api-reference",
@@ -83,7 +83,7 @@
         "tab": "Development",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Developer onboarding",
             "pages": [
               "development/api-sdk-overview",
               "development/developing-with-ai-llm",

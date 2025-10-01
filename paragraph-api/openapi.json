@@ -137,7 +137,14 @@
             }
           }
         },
-        "operationId": "getPublication",
+        "operationId": "getPublicationById",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-publication-by-id",
+            "description": "Get a publication by its unique ID"
+          }
+        },
         "x-codeSamples": [
           {
             "lang": "typescript",
@@ -286,6 +293,13 @@
           }
         },
         "operationId": "getPublicationBySlug",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-publication-by-slug",
+            "description": "Get a publication by its URL-friendly slug (for example, for URL paragraph.com/@blog, the slug would be 'blog'"
+          }
+        },
         "x-codeSamples": [
           {
             "lang": "typescript",
@@ -432,6 +446,13 @@
           }
         },
         "operationId": "getPublicationByDomain",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-publication-by-domain",
+            "description": "Get a publication by its custom domain"
+          }
+        },
         "x-codeSamples": [
           {
             "lang": "typescript",
@@ -546,6 +567,13 @@
           }
         },
         "operationId": "getSubscriberCount",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-subscriber-count",
+            "description": "Get the total number of subscribers for a publication"
+          }
+        },
         "x-codeSamples": [
           {
             "lang": "typescript",
@@ -590,6 +618,15 @@
               "minimum": 1,
               "maximum": 100
             }
+          },
+          {
+            "name": "includeContent",
+            "in": "query",
+            "description": "Include full content fields (markdown, json, staticHtml). Default: false",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            }
           }
         ],
         "responses": {
@@ -621,13 +658,11 @@
                           },
                           "publishedAt": {
                             "type": "string",
-                            "format": "date-time",
-                            "description": "ISO 8601 timestamp when the post was published"
+                            "description": "Epoch timestamp when the post was published"
                           },
                           "updatedAt": {
                             "type": "string",
-                            "format": "date-time",
-                            "description": "ISO 8601 timestamp when the post was last updated"
+                            "description": "Epoch timestamp when the post was last updated"
                           },
                           "subtitle": {
                             "type": "string",
@@ -660,10 +695,7 @@
                         "required": [
                           "id",
                           "title",
-                          "slug",
-                          "staticHtml",
-                          "json",
-                          "markdown"
+                          "slug"
                         ]
                       },
                       "description": "Array of items in this page"
@@ -764,6 +796,13 @@
           }
         },
         "operationId": "getPosts",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "list-publication-posts",
+            "description": "List posts from a publication with pagination"
+          }
+        },
         "x-codeSamples": [
           {
             "lang": "typescript",
@@ -789,6 +828,15 @@
               "type": "string"
             },
             "description": "Unique identifier of the post"
+          },
+          {
+            "name": "includeContent",
+            "in": "query",
+            "description": "Include full content fields (markdown, json, staticHtml). Default: false",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            }
           }
         ],
         "responses": {
@@ -815,13 +863,11 @@
                     },
                     "publishedAt": {
                       "type": "string",
-                      "format": "date-time",
-                      "description": "ISO 8601 timestamp when the post was published"
+                      "description": "Epoch timestamp when the post was published"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "format": "date-time",
-                      "description": "ISO 8601 timestamp when the post was last updated"
+                      "description": "Epoch timestamp when the post was last updated"
                     },
                     "subtitle": {
                       "type": "string",
@@ -854,10 +900,7 @@
                   "required": [
                     "id",
                     "title",
-                    "slug",
-                    "staticHtml",
-                    "json",
-                    "markdown"
+                    "slug"
                   ],
                   "description": "Post details retrieved successfully"
                 }
@@ -929,20 +972,27 @@
             }
           }
         },
-        "operationId": "getPost",
+        "operationId": "getPostById",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-post-by-id",
+            "description": "Get detailed information about a specific post by its ID"
+          }
+        },
         "x-codeSamples": [
           {
             "lang": "typescript",
             "label": "Get post by ID",
-            "source": "import { ParagraphAPI } from \"@paragraph_xyz/sdk\"\n\nconst api = new ParagraphAPI()\nconst post = await api.getPost(\"3T2PQZlsdQtigUp4fhlb\")"
+            "source": "import { ParagraphAPI } from \"@paragraph_xyz/sdk\"\n\nconst api = new ParagraphAPI()\nconst post = await api.getPost({ id: \"3T2PQZlsdQtigUp4fhlb\" })"
           }
         ]
       }
     },
-    "/v1/publications/{publicationId}/posts/slug/{slug}": {
+    "/v1/publications/{publicationId}/posts/slug/{postSlug}": {
       "get": {
-        "description": "Retrieve a post using its publication ID and slug",
-        "summary": "Get post by slug",
+        "description": "Retrieve a post using its publication ID and its URL-friendly slug",
+        "summary": "Get post by publication ID and post slug",
         "tags": [
           "posts"
         ],
@@ -957,7 +1007,7 @@
             "description": "Unique identifier of the publication"
           },
           {
-            "name": "slug",
+            "name": "postSlug",
             "in": "path",
             "required": true,
             "schema": {
@@ -966,6 +1016,15 @@
               "maxLength": 256
             },
             "description": "URL-friendly identifier of the post"
+          },
+          {
+            "name": "includeContent",
+            "in": "query",
+            "description": "Include full content fields (markdown, json, staticHtml). Default: false",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            }
           }
         ],
         "responses": {
@@ -992,13 +1051,11 @@
                     },
                     "publishedAt": {
                       "type": "string",
-                      "format": "date-time",
-                      "description": "ISO 8601 timestamp when the post was published"
+                      "description": "Epoch timestamp when the post was published"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "format": "date-time",
-                      "description": "ISO 8601 timestamp when the post was last updated"
+                      "description": "Epoch timestamp when the post was last updated"
                     },
                     "subtitle": {
                       "type": "string",
@@ -1031,10 +1088,7 @@
                   "required": [
                     "id",
                     "title",
-                    "slug",
-                    "staticHtml",
-                    "json",
-                    "markdown"
+                    "slug"
                   ],
                   "description": "Post details retrieved successfully"
                 }
@@ -1106,12 +1160,209 @@
             }
           }
         },
-        "operationId": "getPostBySlug",
+        "operationId": "getPostByPublicationIdAndPostSlug",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-post-by-publication-id-and-slug",
+            "description": "Get a post using its publication ID and slug"
+          }
+        },
         "x-codeSamples": [
           {
             "lang": "typescript",
-            "label": "Get post by slug",
-            "source": "import { ParagraphAPI } from \"@paragraph_xyz/sdk\"\n\nconst api = new ParagraphAPI()\nconst post = await api.getPostBySlug(\"BMV6abfvCSUl51ErCVzd\", \"coins\")"
+            "label": "Get post by publication ID and slug",
+            "source": "import { ParagraphAPI } from \"@paragraph_xyz/sdk\"\n\nconst api = new ParagraphAPI()\nconst post = await api.getPost({ \n  publicationId: \"BMV6abfvCSUl51ErCVzd\", \n  postSlug: \"my-first-post\" \n})"
+          }
+        ]
+      }
+    },
+    "/v1/publications/slug/{publicationSlug}/posts/slug/{postSlug}": {
+      "get": {
+        "description": "Retrieve a post using its publication's slug and the post's slug. This is useful for building user-facing URLs.",
+        "summary": "Get post by publication slug and post slug",
+        "tags": [
+          "posts"
+        ],
+        "parameters": [
+          {
+            "name": "publicationSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "description": "URL-friendly identifier of the publication, e.g. 'blog'"
+          },
+          {
+            "name": "postSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "description": "URL-friendly identifier of the post, e.g. 'my-first-post'"
+          },
+          {
+            "name": "includeContent",
+            "in": "query",
+            "description": "Include full content fields (markdown, json, staticHtml). Default: false",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Post details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Unique identifier for the post"
+                    },
+                    "title": {
+                      "type": "string",
+                      "maxLength": 200,
+                      "description": "Title of the post"
+                    },
+                    "imageUrl": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "Optional URL to the post's main image"
+                    },
+                    "publishedAt": {
+                      "type": "string",
+                      "description": "Epoch timestamp when the post was published"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "Epoch timestamp when the post was last updated"
+                    },
+                    "subtitle": {
+                      "type": "string",
+                      "maxLength": 300,
+                      "description": "Optional subtitle or brief summary"
+                    },
+                    "slug": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256,
+                      "description": "URL-friendly identifier for the post; accessible at paragraph.com/@[publicationSlug]/[slug]"
+                    },
+                    "staticHtml": {
+                      "type": "string",
+                      "description": "Rendered HTML content of the post"
+                    },
+                    "json": {
+                      "type": "string",
+                      "description": "TipTap JSON representation of the post content structure. This is the source of truth that the staticHtml and markdown is generated from"
+                    },
+                    "markdown": {
+                      "type": "string",
+                      "description": "Markdown source of the post content"
+                    },
+                    "coinId": {
+                      "type": "string",
+                      "description": "ID of the associated coin, if the post is coined"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "slug"
+                  ],
+                  "description": "Post details retrieved successfully"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Post not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [
+                        false
+                      ],
+                      "description": "Always false for error responses"
+                    },
+                    "msg": {
+                      "type": "string",
+                      "description": "Human-readable error message"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Technical error details or error code"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "msg"
+                  ],
+                  "description": "Post not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [
+                        false
+                      ],
+                      "description": "Always false for error responses"
+                    },
+                    "msg": {
+                      "type": "string",
+                      "description": "Human-readable error message"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Technical error details or error code"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "msg"
+                  ],
+                  "description": "Internal server error"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getPostByPublicationSlugAndPostSlug",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-post-by-publication-and-post-slug",
+            "description": "Get a post using its publication slug and post slug"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "typescript",
+            "label": "Get post by publication & post slug",
+            "source": "import { ParagraphAPI } from \"@paragraph_xyz/sdk\"\n\nconst api = new ParagraphAPI()\nconst post = await api.getPost({ \n  publicationSlug: \"blog\",\n  postSlug: \"my-first-post\" \n})"
           }
         ]
       }
@@ -1268,6 +1519,13 @@
           }
         },
         "operationId": "getUser",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-user-by-id",
+            "description": "Get detailed information about a specific user"
+          }
+        },
         "x-codeSamples": [
           {
             "lang": "typescript",
@@ -1430,6 +1688,13 @@
           }
         },
         "operationId": "getUserByWallet",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-user-by-wallet",
+            "description": "Get user details using their Ethereum wallet address"
+          }
+        },
         "x-codeSamples": [
           {
             "lang": "typescript",
@@ -1561,6 +1826,13 @@
           }
         },
         "operationId": "getCoin",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-coin-by-id",
+            "description": "Get information about a tokenized post by its ID"
+          }
+        },
         "x-codeSamples": [
           {
             "lang": "typescript",
@@ -1693,6 +1965,13 @@
           }
         },
         "operationId": "getCoinByContract",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-coin-by-contract",
+            "description": "Get information about a tokenized post by contract address"
+          }
+        },
         "x-codeSamples": [
           {
             "lang": "typescript",
@@ -1770,17 +2049,11 @@
                             "type": "string",
                             "format": "uri",
                             "description": "URL to the user's avatar image, if available"
-                          },
-                          "supportedAt": {
-                            "type": "string",
-                            "format": "date-time",
-                            "description": "ISO 8601 timestamp when user first supported"
                           }
                         },
                         "required": [
                           "walletAddress",
-                          "balance",
-                          "supportedAt"
+                          "balance"
                         ]
                       },
                       "description": "Array of items in this page"
@@ -1881,6 +2154,13 @@
           }
         },
         "operationId": "getCoinHoldersById",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "list-coin-holders-by-id",
+            "description": "List holders of a coined post by coin ID"
+          }
+        },
         "x-codeSamples": [
           {
             "lang": "typescript",
@@ -1959,17 +2239,11 @@
                             "type": "string",
                             "format": "uri",
                             "description": "URL to the user's avatar image, if available"
-                          },
-                          "supportedAt": {
-                            "type": "string",
-                            "format": "date-time",
-                            "description": "ISO 8601 timestamp when user first supported"
                           }
                         },
                         "required": [
                           "walletAddress",
-                          "balance",
-                          "supportedAt"
+                          "balance"
                         ]
                       },
                       "description": "Array of items in this page"
@@ -2070,6 +2344,13 @@
           }
         },
         "operationId": "getCoinHoldersByContract",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "list-coin-holders-by-contract",
+            "description": "List holders of a coined post by contract address"
+          }
+        },
         "x-codeSamples": [
           {
             "lang": "typescript",
@@ -2121,5 +2402,10 @@
   "security": [
     {}
   ],
-  "components": {}
+  "components": {},
+  "x-mint": {
+    "mcp": {
+      "enabled": true
+    }
+  }
 }
