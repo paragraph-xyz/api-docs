@@ -1,7 +1,7 @@
 ---
-title: 'Code Examples'
-description: 'Common patterns and examples for using the Paragraph SDK'
-icon: 'code'
+title: "Code examples"
+description: "Common patterns and examples for using the Paragraph SDK"
+icon: "code"
 ---
 
 Explore practical examples of using the Paragraph SDK to interact with publications, posts, coins, and user profiles.
@@ -50,27 +50,27 @@ async function fetchParagraphPosts(slug: string) {
 ```
 
 <Accordion title="Example response">
-```json
-Last 2 posts from @blog, out of 39 posts: [
-  {
-    "id": "jBY6aEvHXTneYkxnHQ9k",
-    "title": "What We're Learning from Coins on Paragraph",
-    "slug": "what-were-learning-from-coins-on-paragraph",
-    "staticHtml": "<h3>Why coins?</h3><p>It's been a little over a month since we...[truncated]",
-    "json": "{\"type\":\"doc\",\"content\":[{\"type\":\"heading\",\"attrs\":{\"textAlign\":\"left\",\"level\":3}...[truncated]",
-    "markdown": "### Why coins?\n\nIt's been a little over a month since we [shipped]...[truncated]",
-    "coinId": "MTmpnfHJWMTcd84d9kWB",
-    "publishedAt": "2025-09-03T14:30:09.640Z",
-    "updatedAt": "2025-09-04T20:33:28.966Z"
-  },
-]
-
-Pagination: {
-  "cursor": "eyJjcmVhdGVkQXQiOiIyMDI1LTA5LTA1VDEwOjE1OjMyLjAwMFoifQ",
-  "hasMore": true,
-  "total": 39
-}
-```
+  ```json
+  Last 2 posts from @blog, out of 39 posts: [
+    {
+      "id": "jBY6aEvHXTneYkxnHQ9k",
+      "title": "What We're Learning from Coins on Paragraph",
+      "slug": "what-were-learning-from-coins-on-paragraph",
+      "staticHtml": "<h3>Why coins?</h3><p>It's been a little over a month since we...[truncated]",
+      "json": "{\"type\":\"doc\",\"content\":[{\"type\":\"heading\",\"attrs\":{\"textAlign\":\"left\",\"level\":3}...[truncated]",
+      "markdown": "### Why coins?\n\nIt's been a little over a month since we [shipped]...[truncated]",
+      "coinId": "MTmpnfHJWMTcd84d9kWB",
+      "publishedAt": "2025-09-03T14:30:09.640Z",
+      "updatedAt": "2025-09-04T20:33:28.966Z"
+    },
+  ]
+  
+  Pagination: {
+    "cursor": "eyJjcmVhdGVkQXQiOiIyMDI1LTA5LTA1VDEwOjE1OjMyLjAwMFoifQ",
+    "hasMore": true,
+    "total": 39
+  }
+  ```
 </Accordion>
 
 ### Working with coins and holders
@@ -101,75 +101,75 @@ async function fetchCoinFromPost(publicationSlug: string, postSlug: string) {
 ```
 
 <Accordion title="Example response">
-```json
-Fetched coin & holders from post:
-{
-  "id": "N3j7OrRYuRKZQM1rhYEh",
-  "contractAddress": "0xe9bb3166ff5f96381e257d509a801303b68e5d34",
-  "symbol": "WDLA8I",
-  "postId": "WDla8iypUlssljGYjk3h"
-}
-{
-  "items": [
-    {
-      "walletAddress": "0xf3EA0031318D72bc1094F1F7757eA0C21AB7B9d8",
-      "balance": "692968251623303893599919671",
-      "supportedAt": "2025-09-09T18:17:55.599Z"
-    },
-    {
-      "walletAddress": "0xe9bb3166ff5F96381E257d509a801303b68E5D34",
-      "balance": "100000000000000000000000000",
-      "supportedAt": "2025-09-09T18:17:55.599Z"
-    },
-    {
-      "walletAddress": "0x7f9E22F20dcFC3DeC17b46399cc584efB8c5A258",
-      "balance": "20199589120082817066031281",
-      "supportedAt": "2025-09-09T18:17:55.599Z"
-    },
-    {
-      "walletAddress": "0x34D600129974704933a7E2619FB98c9fe030Fcb5",
-      "balance": "17897201041146921014305499",
-      "supportedAt": "2025-09-09T18:17:55.599Z"
-    },
-    {
-      "walletAddress": "0x11111113eA761E8605CE2bb5051F74D2940E3B6B",
-      "balance": "15009842364429493492778480",
-      "supportedAt": "2025-09-09T18:17:55.599Z"
-    },
-    {
-      "walletAddress": "0xAf328cD95630B34fc7E3f38d268666F3EbD78cC7",
-      "balance": "14140720297880197457303025",
-      "supportedAt": "2025-09-09T18:17:55.599Z"
-    },
-    {
-      "walletAddress": "0xF0344f61EDF4599a46743A92fBBa74d365B16352",
-      "balance": "13730282600000000000000000",
-      "supportedAt": "2025-09-09T18:17:55.599Z"
-    },
-    {
-      "walletAddress": "0x44dF085447dBEBCf69C6675c3B8A795c7fdeB3F4",
-      "balance": "12301804207719445739306739",
-      "supportedAt": "2025-09-09T18:17:55.599Z"
-    },
-    {
-      "walletAddress": "0xd53c3e1e2c76165C675Aa7ADd2630f4c78B8C8aE",
-      "balance": "10900130118020538645621876",
-      "supportedAt": "2025-09-09T18:17:55.599Z"
-    },
-    {
-      "walletAddress": "0x74BE1a3d4C5aF15a22ca1BFc27C1fA6084caDd78",
-      "balance": "10336598882089679867027544",
-      "supportedAt": "2025-09-09T18:17:55.599Z",
-      "userId": "UwjHeDkUp0tGTvgCd585"
-    }
-  ],
-  "pagination": {
-    "cursor": "0x000000000000000000000000000000000000000000084595163347d29334c08faee989fda15dfa276bebf116b81d26ba233235ce",
-    "hasMore": true,
-    "total": 205
+  ```json
+  Fetched coin & holders from post:
+  {
+    "id": "N3j7OrRYuRKZQM1rhYEh",
+    "contractAddress": "0xe9bb3166ff5f96381e257d509a801303b68e5d34",
+    "symbol": "WDLA8I",
+    "postId": "WDla8iypUlssljGYjk3h"
   }
-}
-```
+  {
+    "items": [
+      {
+        "walletAddress": "0xf3EA0031318D72bc1094F1F7757eA0C21AB7B9d8",
+        "balance": "692968251623303893599919671",
+        "supportedAt": "2025-09-09T18:17:55.599Z"
+      },
+      {
+        "walletAddress": "0xe9bb3166ff5F96381E257d509a801303b68E5D34",
+        "balance": "100000000000000000000000000",
+        "supportedAt": "2025-09-09T18:17:55.599Z"
+      },
+      {
+        "walletAddress": "0x7f9E22F20dcFC3DeC17b46399cc584efB8c5A258",
+        "balance": "20199589120082817066031281",
+        "supportedAt": "2025-09-09T18:17:55.599Z"
+      },
+      {
+        "walletAddress": "0x34D600129974704933a7E2619FB98c9fe030Fcb5",
+        "balance": "17897201041146921014305499",
+        "supportedAt": "2025-09-09T18:17:55.599Z"
+      },
+      {
+        "walletAddress": "0x11111113eA761E8605CE2bb5051F74D2940E3B6B",
+        "balance": "15009842364429493492778480",
+        "supportedAt": "2025-09-09T18:17:55.599Z"
+      },
+      {
+        "walletAddress": "0xAf328cD95630B34fc7E3f38d268666F3EbD78cC7",
+        "balance": "14140720297880197457303025",
+        "supportedAt": "2025-09-09T18:17:55.599Z"
+      },
+      {
+        "walletAddress": "0xF0344f61EDF4599a46743A92fBBa74d365B16352",
+        "balance": "13730282600000000000000000",
+        "supportedAt": "2025-09-09T18:17:55.599Z"
+      },
+      {
+        "walletAddress": "0x44dF085447dBEBCf69C6675c3B8A795c7fdeB3F4",
+        "balance": "12301804207719445739306739",
+        "supportedAt": "2025-09-09T18:17:55.599Z"
+      },
+      {
+        "walletAddress": "0xd53c3e1e2c76165C675Aa7ADd2630f4c78B8C8aE",
+        "balance": "10900130118020538645621876",
+        "supportedAt": "2025-09-09T18:17:55.599Z"
+      },
+      {
+        "walletAddress": "0x74BE1a3d4C5aF15a22ca1BFc27C1fA6084caDd78",
+        "balance": "10336598882089679867027544",
+        "supportedAt": "2025-09-09T18:17:55.599Z",
+        "userId": "UwjHeDkUp0tGTvgCd585"
+      }
+    ],
+    "pagination": {
+      "cursor": "0x000000000000000000000000000000000000000000084595163347d29334c08faee989fda15dfa276bebf116b81d26ba233235ce",
+      "hasMore": true,
+      "total": 205
+    }
+  }
+  ```
 </Accordion>
 
 ### User profile lookup
@@ -189,20 +189,20 @@ async function getUserProfileByWallet(walletAddress: string) {
 ```
 
 <Accordion title="Example response">
-```json
-User profile: {
-  "id": "AeAOtR8TqKWyzG5apA1R",
-  "walletAddress": "0xc9ddb5E37165827BBBFf15b582E232C06862C4E8",
-  "avatarUrl": "https://storage.googleapis.com/papyrus_images/cb027d7a045c7c1d6b6700d9c95b2f56",
-  "publicationId": "BMV6abfvCSUl51ErCVzd",
-  "name": "Colin Armstrong",
-  "farcaster": {
-    "fid": 12312,
-    "username": "paragraph",
-    "displayName": "Paragraph"
+  ```json
+  User profile: {
+    "id": "AeAOtR8TqKWyzG5apA1R",
+    "walletAddress": "0xc9ddb5E37165827BBBFf15b582E232C06862C4E8",
+    "avatarUrl": "https://storage.googleapis.com/papyrus_images/cb027d7a045c7c1d6b6700d9c95b2f56",
+    "publicationId": "BMV6abfvCSUl51ErCVzd",
+    "name": "Colin Armstrong",
+    "farcaster": {
+      "fid": 12312,
+      "username": "paragraph",
+      "displayName": "Paragraph"
+    }
   }
-}
-```
+  ```
 </Accordion>
 
 ## Next steps
