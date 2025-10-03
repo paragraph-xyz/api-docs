@@ -51,3 +51,45 @@ Coins are part of our ongoing attempt to expand the idea economy. We hope coins 
 All while giving writers new ways to earn and feel like their work matters.
 
 To read more about post coins and any updates, check out the [Paragraph newsletter](https://paragraph.com/@blog) and our [announcement blog post](https://paragraph.com/@blog/coins).
+
+---
+
+### Technical details
+
+Coins are deployed using the [Doppler protocol](https://doppler.so) on the [Base](https://base.org) network. Each post coin is a standard ERC‑20 token with a fixed total supply and fair-launch mechanics.
+
+**What happens when a coin launches?**
+
+- **Total supply**: 1 billion (1,000,000,000) tokens per post coin
+- **Writer/creator allocation**: 10% of the total supply, vested linearly over 1 year
+- **Transaction fees**: 1% of each buy or sell is split as follows:
+  - 0.475% to the writer/creator
+  - 0.475% to Paragraph
+  - 0.05% to the Doppler protocol
+
+These fees accumulate in the post coin contract and can be claimed either through the Paragraph UI or directly onchain.
+
+**How do writers/creators earn money with coins?**
+
+Writers/creators can earn from coins in two ways:
+
+1. **A percentage of every transaction**
+   - Writers/creators receive a portion of the trading fees from anyone buying or selling their coin.
+   - These are available to claim as soon as they accumulate.
+2. **Appreciation in the value of their their post coins**
+   - Writers/creators receive 10% of the total supply of their own coin.
+   - If their post gains attention and people continue supporting it (i.e., buying their post coin), the value of their coin can go up. Writers/creators have the opportunity to sell any of their post coins that have vested if there’s enough demand.
+
+**Tell me more about liquidity & how it impacts my ability to sell my coins.**
+
+It’s important to know that having coins doesn’t always mean you can sell them immediately.
+
+Each post coin has its own market, and the amount of trading activity (liquidity) varies depending on how much interest or support that post receives. If few people are buying or selling a given coin, it may be hard to sell any coins at all. Even if there's a market, selling large amounts may have a notable impact on the price.
+
+**How about more details on how coins are deployed?**
+
+- Coins are deployed using Doppler’s `AirlockFactory` contract on Base.
+- Pricing is powered by a **static bonding curve** on top of a Uniswap v3 pool, enabling fair pricing and mitigating bot-based sniping.
+- You can find the latest smart contract implementation and details on [doppler.so](https://doppler.so).
+
+Want to work with coins programmatically? Check out our [API](/development/api-sdk-overview) and [TypeScript SDK](/development/sdk/index).
