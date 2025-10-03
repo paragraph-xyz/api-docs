@@ -1,0 +1,37 @@
+---
+title: "Reading Paragraph posts from Arweave"
+description: "How developers and writers can fetch posts from Arweave."
+---
+
+Paragraph gives writers the option to store their posts on [Arweave](https://www.arweave.org/), enabling permanent and censorship-resistant publishing. This means **anyone can permissionlessly access Paragraph posts via Arweave**, allowing for powerful integrations, self-hosted mirrors, or other dApps built on top of Paragraph data.
+
+---
+
+## Querying Arweave for Posts
+
+To retrieve Paragraph posts from Arweave, follow these two steps:
+
+### 1. Query Arweave via GraphQL for the transaction ID
+
+You can search based on Arweave tags like the `Contributor` wallet or post metadata.
+
+Example GraphQL query to fetch the **latest post** from a specific wallet:
+
+```graphql
+query GetParagraphPosts($wallet: String!) {
+  transactions(
+    tags: [
+      { name: "AppName", values: ["Paragraph"] },
+      { name: "Contributor", values: [$wallet] }
+    ],
+    sort: HEIGHT_DESC,
+    first: 1
+  ) {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+}
+```
