@@ -35,3 +35,37 @@ query GetParagraphPosts($wallet: String!) {
   }
 }
 ```
+
+### **2. Fetch the post content using Arweave JS SDK**
+
+Once you have the transaction ID, use the [Arweave JS SDK](https://github.com/ArweaveTeam/arweave-js) to retrieve the post data.
+
+Posts stored on Arweave include:
+
+- Static HTML
+- TipTap JSON (for rich content structure)
+- Metadata (publish date, categories, tags, etc.)
+
+## **Example Integration**
+
+[This open-source repo](https://github.com/PirosB3/Paragraph-Farcaster-xposter) by [@PirosB3](https://github.com/PirosB3) demonstrates how to:
+
+- Fetch Paragraph posts from Arweave
+- Cross-post them to [Farcaster](https://www.farcaster.xyz/)
+
+## **When to Use This Approach**
+
+Use Arweave-based reading if:
+
+- You want to build fully decentralized frontends or backup content
+- You don’t want to rely on the Paragraph API or SDK
+- You want to mirror Paragraph content across multiple protocols or UIs
+
+For most app developers, our [API](/development/api-sdk-overview) and [SDK](/development/sdk/index) are easier to work with — but Arweave remains a valuable, trustless fallback.
+
+## **Resources**
+
+- [Arweave GraphQL](https://arweave.net/graphql)
+- [Arweave JS SDK](https://github.com/ArweaveTeam/arweave-js)
+- [TipTap Editor JSON Spec](https://github.com/ueberdosis/tiptap)
+- [Paragraph → Farcaster example](https://github.com/PirosB3/Paragraph-Farcaster-xposter)
