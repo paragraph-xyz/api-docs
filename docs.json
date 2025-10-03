@@ -90,7 +90,8 @@
             "pages": [
               "development/api-sdk-overview",
               "development/developing-with-ai-llm",
-              "development/listening-to-onchain-events"
+              "development/listening-to-onchain-events",
+              "development/reading-from-arweave"
             ]
           },
           {
