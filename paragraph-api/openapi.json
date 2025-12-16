@@ -615,8 +615,10 @@
             "in": "query",
             "description": "Include full content fields (json, staticHtml, markdown) in the post. Default: false",
             "schema": {
-              "type": "boolean",
-              "nullable": true
+              "type": [
+                "boolean",
+                "null"
+              ]
             }
           }
         ],
@@ -960,8 +962,10 @@
             "in": "query",
             "description": "Include full content fields (markdown, json, staticHtml). Default: false",
             "schema": {
-              "type": "boolean",
-              "nullable": true
+              "type": [
+                "boolean",
+                "null"
+              ]
             }
           }
         ],
@@ -1170,8 +1174,10 @@
             "in": "query",
             "description": "Include full content fields (markdown, json, staticHtml). Default: false",
             "schema": {
-              "type": "boolean",
-              "nullable": true
+              "type": [
+                "boolean",
+                "null"
+              ]
             }
           }
         ],
@@ -1358,8 +1364,10 @@
             "in": "query",
             "description": "Include full content fields (markdown, json, staticHtml). Default: false",
             "schema": {
-              "type": "boolean",
-              "nullable": true
+              "type": [
+                "boolean",
+                "null"
+              ]
             }
           }
         ],
@@ -1548,8 +1556,10 @@
             "in": "query",
             "description": "Include full content fields (markdown, json, staticHtml). Default: false",
             "schema": {
-              "type": "boolean",
-              "nullable": true
+              "type": [
+                "boolean",
+                "null"
+              ]
             }
           }
         ],
@@ -4311,8 +4321,7 @@
                 "type": "object",
                 "properties": {
                   "file": {
-                    "description": "CSV file containing subscriber data (max 10MB)",
-                    "nullable": true
+                    "description": "CSV file containing subscriber data (max 10MB)"
                   }
                 }
               }
