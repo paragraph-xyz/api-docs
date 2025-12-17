@@ -4,7 +4,7 @@ description: 'Get started with the Paragraph SDK'
 icon: 'bolt'
 ---
 
-The Paragraph SDK is a typescript wrapper around our REST API. All functionality in the SDK can be found in the [API Reference](/api-ference/), in the repository on [GitHub](https://github.com/paragraph-xyz/paragraph-sdk-js), or in the documentation on [NPM](https://www.npmjs.com/package/@paragraph_xyz/sdk).
+The Paragraph SDK is a typescript wrapper around our REST API. All functionality in the SDK can be found in the [API Reference](/api-reference/), in the repository on [GitHub](https://github.com/paragraph-xyz/paragraph-sdk-js), or in the documentation on [NPM](https://www.npmjs.com/package/@paragraph-com/sdk).
 
 ## Getting started
 
@@ -20,7 +20,7 @@ Follow these steps to install & use the Paragraph typescript SDK.
 <Step title="Install the Paragraph SDK">
 
 ```bash
-npm i @paragraph_xyz/sdk
+npm i @paragraph-com/sdk
 ```
 </Step>
 
@@ -29,9 +29,13 @@ npm i @paragraph_xyz/sdk
 Instantiate the `ParagraphAPI` class.
 
 ```typescript
-import { ParagraphAPI } from "@paragraph_xyz/sdk"
+import { ParagraphAPI } from "@paragraph-com/sdk"
 
+// For public endpoints (no API key required)
 const api = new ParagraphAPI()
+
+// For protected endpoints (API key required)
+const apiWithAuth = new ParagraphAPI({ apiKey: "your-api-key" })
 ```
 
 </Step>
@@ -42,14 +46,14 @@ Query Paragraph data. All calls can be found in the [SDK repo](https://github.co
 
 
 ```typescript
-const slug = 'blog'
-const publication = await api.getPublicationBySlug(slug)
+// Fetch a publication by slug (use .single() for single object)
+const publication = await api.publications.get({ slug: "@blog" }).single()
 console.log(`Fetched publication: ${publication}`)
 
-const postData = await api.getPosts(publication.id)
-const posts = postData.items
+// Fetch posts (paginated list)
+const { items: posts, pagination } = await api.posts.get({ publicationId: publication.id })
 
-console.log(`Fetched ${postData.length} posts from ${slug}, out of ${postData.pagination.total} posts: ${JSON.stringify(posts)} `)
+console.log(`Fetched ${posts.length} posts from @blog, out of ${pagination.total} posts: ${JSON.stringify(posts)}`)
 ```
 
 </Step>
