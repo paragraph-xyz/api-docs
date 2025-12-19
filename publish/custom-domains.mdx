@@ -13,39 +13,98 @@ Activating a custom domain is a one-time \$50 purchase from your [publication se
 
 Before you begin, make sure you:
 
-- Own a domain through a registrar (GoDaddy, Namecheap, Cloudflare, etc.).
-- Unlock the feature in Publication Settings (one-time \$50 fee).
-- Have access to your DNS dashboard.
+- Own a domain through a registrar (GoDaddy, Namecheap, Cloudflare, etc.)
+- Unlock the feature in Publication Settings (one-time \$50 fee)
+- Have access to your DNS dashboard
 
 ---
 
 ## DNS configuration
 
-### Root domains (example.com)
+All custom domains use a **CNAME record** pointing to `cname.paragraph.com`. You'll also need to add the **TXT records** shown in your Publication Settings for verification.
 
-| Type | Name                                  | Value          |
-| ---- | ------------------------------------- | -------------- |
-| A    | @                                     | 76.76.21.21    |
-| TXT  | Provided in your Publication Settings | Provided value |
+### Subdomains (blog.example.com) — Recommended
 
-### Subdomains (blog.example.com)
+Subdomains work with all DNS providers and are the easiest to set up.
 
 | Type  | Name                                  | Value               |
 | ----- | ------------------------------------- | ------------------- |
 | CNAME | blog                                  | cname.paragraph.com |
 | TXT   | Provided in your Publication Settings | Provided value      |
+| TXT   | Provided in your Publication Settings | Provided value      |
 
----
+### Root domains (example.com)
+
+Root (apex) domains require your DNS provider to support CNAME or ALIAS records at the apex. Not all providers support this.
+
+| Type           | Name                                  | Value               |
+| -------------- | ------------------------------------- | ------------------- |
+| CNAME or ALIAS | @                                     | cname.paragraph.com |
+| TXT            | Provided in your Publication Settings | Provided value      |
+| TXT            | Provided in your Publication Settings | Provided value      |
+
+If your registrar doesn't allow adding a CNAME record for `@`, try adding an **ALIAS** record instead. If neither option is available, consider [moving your DNS to Cloudflare](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup/) (free)\
+which supports CNAME at the apex. You can keep your domain registered at your current registrar.
+
+## Common setup mistakes
+
+### Using the full domain in the Name field
+
+Most DNS providers automatically append your domain to whatever you enter in the Name field.
+
+| You enter          | What gets created                |
+| ------------------ | -------------------------------- |
+| `@`                | `example.com` ✓                  |
+| `blog`             | `blog.example.com` ✓             |
+| `example.com`      | `example.com.example.com` ✗      |
+| `blog.example.com` | `blog.example.com.example.com` ✗ |
+
+### Conflicting A records
+
+If you have an existing **A record** for the same domain, delete it before adding the CNAME. A records take precedence and will prevent your domain from routing to Paragraph.
+
+### Wildcard records
+
+If you have a **wildcard record** (`*`) pointing to another server, it may interfere with your subdomain. Either:
+
+- Delete the wildcard record, or
+- Make sure your specific subdomain record is set up correctly (specific records should override wildcards, but some providers\
+  behave differently)
 
 ## Verification
 
 1. Add your domain in **Publication Settings**.
-2. Copy the **TXT record** shown and add it at your registrar.
-3. Add the required **A** (or **CNAME**) record.
+2. Copy the **TXT records** shown and add them at your registrar.
+3. Add the **CNAME** record pointing to `cname.paragraph.com`.
 4. Wait at least 30 minutes, then click the refresh (↻) button in Paragraph.
 5. Once verified, your publication will load at your new domain.
 
-DNS propagation can take up to **24–48 hours**, though most work within a few hours.
+DNS propagation can take up to **24–48 hours**, though most changes appear within a few hours.
+
+## Troubleshooting
+
+### "Custom hostname does not CNAME to this zone"
+
+This means your domain isn't pointing to `cname.paragraph.com`. Check that:
+
+- You added a CNAME record, not an A record
+- There's no conflicting A record for the same domain
+- There's no wildcard (`*`) record overriding your settings
+- Your DNS changes have been saved/published
+
+### Domain shows as verified but returns a 404 error
+
+Your verification TXT records are correct, but traffic isn't reaching Paragraph. This usually means:
+
+- The CNAME record is missing or points to the wrong target
+- An old A record is still active (possibly pointing to `76.76.21.21` from a previous setup)
+
+### Root domain won't work
+
+Your DNS provider likely doesn't support CNAME or ALIAS at the apex. Options:
+
+1. **Move DNS to Cloudflare** (free, keeps domain registered elsewhere)
+2. **Use a subdomain** like `www.example.com` instead
 
 ---
 
