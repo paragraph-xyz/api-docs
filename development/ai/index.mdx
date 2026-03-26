@@ -35,6 +35,17 @@ Once configured, Claude Code can:
 - Access real-time API information
 - Generate code with up-to-date API knowledge
 
+## CLI for Agents
+
+The [Paragraph CLI](/development/cli) (`@paragraph-com/cli`) is designed for agent and programmatic usage. All commands support `--json` for structured output:
+
+```bash
+npm install -g @paragraph-com/cli
+PARAGRAPH_API_KEY=<your-api-key> paragraph --json post list
+```
+
+See the [full command reference](/development/cli/commands) for details.
+
 ## Best Practices for AI-Assisted Development
 
 ### 1. Provide Clear Context

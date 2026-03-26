@@ -1,0 +1,199 @@
+---
+title: "Commands"
+description: "Full reference for all Paragraph CLI commands"
+icon: "rectangle-terminal"
+---
+
+## Posts
+
+### List posts
+
+```bash
+paragraph post list
+paragraph post list --status draft
+paragraph post list --limit 50 --cursor <cursor>
+
+# List posts from any publication (public, no auth required)
+paragraph post list --publication <id-or-slug>
+```
+
+### Get a post
+
+Accepts an ID, URL, or `@publication/slug`:
+
+```bash
+paragraph post get <post-id>
+paragraph post get @yearn/some-post-slug
+paragraph post get https://paragraph.com/@yearn/some-post-slug
+```
+
+Extract a single field (raw value to stdout, pipeable):
+
+```bash
+paragraph post get <id> --field markdown > post.md
+paragraph post get <id> --field title
+```
+
+### Create a post
+
+Creates a draft by default:
+
+```bash
+paragraph post create --title "My Post" --text "# Hello World"
+paragraph post create --title "My Post" --file ./draft.md
+cat draft.md | paragraph post create --title "From Stdin"
+paragraph post create --title "Post" --text "Content" --subtitle "Summary" --tags "web3,defi"
+```
+
+### Update a post
+
+```bash
+paragraph post update <id-or-slug> --title "New Title"
+paragraph post update <id-or-slug> --file ./updated.md --tags "new,tags"
+```
+
+### Post lifecycle
+
+```bash
+paragraph post publish <id-or-slug>
+paragraph post publish <id-or-slug> --newsletter     # publish + email subscribers
+paragraph post draft <id-or-slug>                     # revert to draft
+paragraph post archive <id-or-slug>
+```
+
+### Preview and test
+
+```bash
+paragraph post publish <id-or-slug> --dry-run
+paragraph post delete <id-or-slug> --dry-run
+paragraph post test-email <id>                        # send test email (drafts only)
+```
+
+### Delete a post
+
+```bash
+paragraph post delete <id-or-slug>
+paragraph post delete <id-or-slug> --yes              # skip confirmation
+```
+
+### Browse posts
+
+```bash
+paragraph post by-tag defi --limit 20
+paragraph post feed --limit 10
+```
+
+### Shortcuts
+
+Top-level shortcuts for common operations:
+
+```bash
+paragraph create --title "Quick Post" --text "Content"
+paragraph update my-post-slug --title "Updated"
+paragraph delete my-post-slug --yes
+```
+
+## Publications
+
+```bash
+paragraph publication get @variantwriting
+paragraph publication get blog.variant.fund
+paragraph publication get <publication-id>
+```
+
+## Search
+
+```bash
+paragraph search post --query "ethereum"
+paragraph search blog --query "web3"
+```
+
+## Subscribers
+
+```bash
+paragraph subscriber list --limit 100
+paragraph subscriber count <publication-id>
+paragraph subscriber add --email user@example.com
+paragraph subscriber import --csv subscribers.csv
+```
+
+## Coins
+
+```bash
+paragraph coin get <id-or-address>
+paragraph coin popular --limit 10
+paragraph coin search --query "test"
+paragraph coin holders <id-or-address> --limit 50
+paragraph coin quote <id-or-address> --amount <wei>
+```
+
+## Users
+
+```bash
+paragraph user get <user-id>
+paragraph user get 0x1234...    # by wallet address
+```
+
+## Agent and programmatic usage
+
+The CLI is designed for use by AI agents and scripts.
+
+### JSON output
+
+All commands support `--json`. Data goes to **stdout**, status messages to **stderr**:
+
+```bash
+paragraph --json post list | jq '.data[0].title'
+paragraph --json post get <id> | jq '.markdown'
+paragraph --json search post --query "web3" | jq '.length'
+```
+
+Paginated commands return:
+
+```json
+{
+  "data": [{ "id": "...", "title": "..." }],
+  "pagination": { "cursor": "abc123", "hasMore": true }
+}
+```
+
+Single-item commands return the object directly:
+
+```json
+{ "id": "...", "title": "...", "markdown": "..." }
+```
+
+### Structured errors
+
+In `--json` mode, errors are structured JSON on **stderr** with a non-zero exit code:
+
+```json
+{ "error": "Not found.", "code": "NOT_FOUND", "status": 404 }
+```
+
+Error codes: `UNAUTHORIZED`, `FORBIDDEN`, `NOT_FOUND`, `RATE_LIMITED`, `SERVER_ERROR`, `REQUEST_FAILED`, `CLIENT_ERROR`, `UNKNOWN`.
+
+### Non-interactive safety
+
+- `delete` requires `--yes` in non-TTY environments
+- `login` supports `--with-token` for stdin piping and `--token` for direct input
+- Destructive commands support `--dry-run`
+- Set `PARAGRAPH_NON_INTERACTIVE=1` or `CI=true` to force CLI mode
+
+### Environment variables
+
+| Variable | Purpose |
+|----------|---------|
+| `PARAGRAPH_API_KEY` | API key (alternative to `login`) |
+| `PARAGRAPH_API_URL` | Custom API base URL |
+| `PARAGRAPH_NON_INTERACTIVE` | Set to `1` to disable TUI |
+| `CI` | Set to `true` to disable TUI |
+
+## Interactive TUI
+
+Running `paragraph` with no arguments launches an interactive terminal UI with menus, scrollable lists, and keyboard navigation.
+
+The TUI is disabled automatically when:
+- `--json`, `--help`, or `--version` flags are used
+- stdout is not a TTY (e.g., piped output)
+- `CI=true` or `PARAGRAPH_NON_INTERACTIVE=1` is set

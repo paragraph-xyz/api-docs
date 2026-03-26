@@ -102,6 +102,13 @@
               "development/sdk/index",
               "development/sdk/examples"
             ]
+          },
+          {
+            "group": "CLI",
+            "pages": [
+              "development/cli/index",
+              "development/cli/commands"
+            ]
           }
         ]
       },

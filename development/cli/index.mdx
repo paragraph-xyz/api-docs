@@ -1,0 +1,89 @@
+---
+title: "Quickstart"
+description: "Get started with the Paragraph CLI"
+icon: "terminal"
+---
+
+The Paragraph CLI is a command-line tool for managing posts, publications, subscribers, and coins. It works for both human and programmatic (agent) usage.
+
+<Info>
+  **Prerequisites**:
+  - Node.js version 18 or higher
+</Info>
+
+## Install
+
+<CodeGroup>
+
+```bash npm
+npm install -g @paragraph-com/cli
+```
+
+```bash Homebrew
+brew tap paragraph-com/tap && brew install paragraph
+```
+
+</CodeGroup>
+
+## Authentication
+
+Get your API key from **paragraph.com/settings -> Publication -> Developer**.
+
+<Steps>
+<Step title="Authenticate">
+
+```bash
+paragraph login
+```
+
+Or provide the key directly:
+
+```bash
+paragraph login --token <your-api-key>
+```
+
+</Step>
+
+<Step title="Verify">
+
+```bash
+paragraph whoami
+```
+
+</Step>
+</Steps>
+
+For CI or agent environments, you can pipe the token or set an environment variable:
+
+```bash
+echo "<your-api-key>" | paragraph login --with-token
+
+PARAGRAPH_API_KEY=<your-api-key> paragraph post list
+```
+
+Credentials are stored in `~/.paragraph/config.json` (mode 0600).
+
+## Quick examples
+
+```bash
+paragraph post create --title "My Post" --file ./draft.md
+
+paragraph post publish my-post
+
+paragraph post list
+
+paragraph search post --query "ethereum"
+```
+
+Run `paragraph --help` for all commands, or `paragraph <command> --help` for details on any command.
+
+## Resources
+
+<Columns cols={2}>
+  <Card title="Full command reference" icon="book" href="/development/cli/commands">
+    Browse all CLI commands with examples and options.
+  </Card>
+  <Card title="View on GitHub" icon="github" href="https://github.com/paragraph-xyz/paragraph-cli">
+    Explore the source code or report issues.
+  </Card>
+</Columns>
