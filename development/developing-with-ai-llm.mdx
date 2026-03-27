@@ -15,24 +15,15 @@ https://paragraph.com/docs/llms-full.txt
 
 Simply paste this URL or its contents into your LLM conversation to give it complete knowledge of Paragraph's API endpoints, data models, and capabilities.
 
-## MCP Server Integration
+## MCP Server
 
-For a more integrated experience with LLMs, you can set up the Paragraph MCP (Model Context Protocol) server. This allows direct interacttion with the API, and the ability to search documentation.
-
-### Installation
-
-Run the following command to add the Paragraph MCP server to Claude Code. Other AI clients are similar:
+The [Paragraph MCP server](/development/mcp) (`@paragraph-com/mcp`) connects AI agents directly to the Paragraph API. Manage posts, search content, work with coins, and more from any MCP-compatible client.
 
 ```bash
-claude mcp add --transport http paragraph https://paragraph.mintlify.app/mcp
+npx @paragraph-com/mcp
 ```
 
-Once configured, Claude Code can:
-
-- Search Paragraph documentation directly
-- Make API calls with proper authentication
-- Access real-time API information
-- Generate code with up-to-date API knowledge
+Works with Claude Code, Claude Desktop, Cursor, VS Code, and any MCP client. See the [full MCP setup guide](/development/mcp) for client-specific instructions and configuration.
 
 ## CLI for Agents
 

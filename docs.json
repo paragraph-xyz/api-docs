@@ -109,6 +109,12 @@
               "development/cli/index",
               "development/cli/commands"
             ]
+          },
+          {
+            "group": "MCP",
+            "pages": [
+              "development/mcp"
+            ]
           }
         ]
       },
@@ -140,7 +146,6 @@
       "chatgpt",
       "claude",
       "perplexity",
-      "mcp",
       "cursor",
       "vscode"
     ]

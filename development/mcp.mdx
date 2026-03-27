@@ -1,0 +1,154 @@
+---
+title: "MCP Server"
+description: "Connect AI agents to Paragraph via the Model Context Protocol"
+icon: "plug"
+---
+
+The Paragraph MCP server (`@paragraph-com/mcp`) lets AI agents interact with Paragraph directly. Manage posts, publications, subscribers, coins, and more from any MCP-compatible client.
+
+<Info>
+  **Prerequisites**:
+  - Node.js version 18 or higher
+</Info>
+
+## Quick start
+
+```bash
+npx @paragraph-com/mcp
+```
+
+That's it. The server runs over stdio and works with any MCP client.
+
+## Setup by client
+
+<Tabs>
+<Tab title="Claude Code">
+
+```bash
+claude mcp add paragraph -- npx @paragraph-com/mcp
+```
+
+To include your API key:
+
+```bash
+claude mcp add --env PARAGRAPH_API_KEY=your-key paragraph -- npx @paragraph-com/mcp
+```
+
+</Tab>
+<Tab title="Claude Desktop">
+
+Add to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "paragraph": {
+      "command": "npx",
+      "args": ["@paragraph-com/mcp"],
+      "env": {
+        "PARAGRAPH_API_KEY": "your-key"
+      }
+    }
+  }
+}
+```
+
+</Tab>
+<Tab title="Cursor">
+
+Add to `.cursor/mcp.json` in your project root:
+
+```json
+{
+  "mcpServers": {
+    "paragraph": {
+      "command": "npx",
+      "args": ["@paragraph-com/mcp"],
+      "env": {
+        "PARAGRAPH_API_KEY": "your-key"
+      }
+    }
+  }
+}
+```
+
+</Tab>
+<Tab title="VS Code">
+
+Add to `.vscode/mcp.json` in your project root:
+
+```json
+{
+  "servers": {
+    "paragraph": {
+      "command": "npx",
+      "args": ["@paragraph-com/mcp"],
+      "env": {
+        "PARAGRAPH_API_KEY": "your-key"
+      }
+    }
+  }
+}
+```
+
+</Tab>
+</Tabs>
+
+## Authentication
+
+The MCP server resolves your API key in this order:
+
+1. **`PARAGRAPH_API_KEY` environment variable** (highest priority)
+2. **Shared CLI config** at `~/.paragraph/config.json` (set via `npx @paragraph-com/cli login`)
+
+Get your API key from **[paragraph.com/settings -> Publication -> Developer](https://paragraph.com/settings/publication/#developer)**.
+
+<Tip>
+  Read-only tools like search, feed, and public post fetching work without authentication. You only need an API key for write operations and accessing your own publication data.
+</Tip>
+
+## Available tools
+
+The server exposes 25+ tools organized into toolsets:
+
+| Toolset | Tools | Auth required |
+| --- | --- | --- |
+| **posts** | `get-post`, `list-posts`, `create-post`, `update-post`, `delete-post`, `send-test-email` | Write ops only |
+| **publications** | `get-publication` | No |
+| **subscribers** | `list-subscribers`, `get-subscriber-count`, `add-subscriber` | Yes |
+| **users** | `get-user` | No |
+| **coins** | `get-coin`, `list-coin-holders` | No |
+| **search** | `search-posts`, `search-blogs`, `search-coins` | No |
+| **feed** | `get-feed` | No |
+| **me** | `get-me` | Yes |
+
+## Filtering toolsets
+
+Expose only the tools your agent needs to reduce context usage:
+
+```bash
+npx @paragraph-com/mcp --toolsets posts,search
+```
+
+Available toolset names: `posts`, `publications`, `subscribers`, `users`, `coins`, `search`, `feed`, `me`
+
+## HTTP mode
+
+For server deployments, run the MCP server over HTTP instead of stdio:
+
+```bash
+npx @paragraph-com/mcp --http --port 3100
+```
+
+The HTTP server binds to `127.0.0.1` (localhost only) and accepts POST requests. A health check is available at `GET /health`.
+
+## Resources
+
+<Columns cols={2}>
+  <Card title="View on GitHub" icon="github" href="https://github.com/paragraph-xyz/paragraph-mcp">
+    Explore the source code or report issues.
+  </Card>
+  <Card title="npm package" icon="npm" href="https://www.npmjs.com/package/@paragraph-com/mcp">
+    View on npm.
+  </Card>
+</Columns>
