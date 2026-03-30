@@ -4,22 +4,76 @@ description: "Connect AI agents to Paragraph via the Model Context Protocol"
 icon: "plug"
 ---
 
-The Paragraph MCP server (`@paragraph-com/mcp`) lets AI agents interact with Paragraph directly. Manage posts, publications, subscribers, coins, and more from any MCP-compatible client.
-
-<Info>
-  **Prerequisites**:
-  - Node.js version 18 or higher
-</Info>
+The Paragraph MCP server lets AI agents interact with Paragraph directly. Manage posts, publications, subscribers, coins, and more from any MCP-compatible client.
 
 ## Quick start
+
+The fastest way to get started is with the hosted server at `mcp.paragraph.com`. No installation or API key management needed — you authenticate through your Paragraph account in the browser.
+
+<Tabs>
+<Tab title="Claude Code">
+
+```bash
+claude mcp add paragraph --transport http https://mcp.paragraph.com/mcp
+```
+
+</Tab>
+<Tab title="Claude Desktop">
+
+Add to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "paragraph": {
+      "url": "https://mcp.paragraph.com/mcp"
+    }
+  }
+}
+```
+
+</Tab>
+<Tab title="Cursor">
+
+Add to `.cursor/mcp.json` in your project root:
+
+```json
+{
+  "mcpServers": {
+    "paragraph": {
+      "url": "https://mcp.paragraph.com/mcp"
+    }
+  }
+}
+```
+
+</Tab>
+<Tab title="VS Code">
+
+Add to `.vscode/mcp.json` in your project root:
+
+```json
+{
+  "servers": {
+    "paragraph": {
+      "url": "https://mcp.paragraph.com/mcp"
+    }
+  }
+}
+```
+
+</Tab>
+</Tabs>
+
+## Local server
+
+If you prefer to run the server locally, use npx. Requires Node.js 18+.
 
 ```bash
 npx @paragraph-com/mcp
 ```
 
-That's it. The server runs over stdio and works with any MCP client.
-
-## Setup by client
+The server runs over stdio and works with any MCP client.
 
 <Tabs>
 <Tab title="Claude Code">
@@ -96,7 +150,9 @@ Add to `.vscode/mcp.json` in your project root:
 
 ## Authentication
 
-The MCP server resolves your API key in this order:
+The remote server at `mcp.paragraph.com` handles authentication automatically — when you first connect, you'll be redirected to approve access through your Paragraph account in the browser.
+
+For the local server, the MCP server resolves your API key in this order:
 
 1. **`PARAGRAPH_API_KEY` environment variable** (highest priority)
 2. **Shared CLI config** at `~/.paragraph/config.json` (set via `npx @paragraph-com/cli login`)
@@ -104,7 +160,7 @@ The MCP server resolves your API key in this order:
 Get your API key from **[paragraph.com/settings -> Publication -> Developer](https://paragraph.com/settings/publication/#developer)**.
 
 <Tip>
-  Read-only tools like search, feed, and public post fetching work without authentication. You only need an API key for write operations and accessing your own publication data.
+  Read-only tools like search, feed, and public post fetching work without authentication. You only need to authenticate for write operations and accessing your own publication data.
 </Tip>
 
 ## Available tools
