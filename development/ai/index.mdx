@@ -18,17 +18,13 @@ Simply paste this URL or its contents into your LLM conversation to give it comp
 
 ## MCP Server
 
-The [Paragraph MCP server](/development/mcp) connects AI agents directly to the Paragraph API. Manage posts, search content, work with coins, and more from any MCP-compatible client.
-
-The fastest way to connect is using the hosted server at `mcp.paragraph.com` — no installation or API key management required:
+The [Paragraph MCP server](/development/mcp) (`@paragraph-com/mcp`) connects AI agents directly to the Paragraph API. Manage posts, search content, work with coins, and more from any MCP-compatible client.
 
 ```bash
-claude mcp add paragraph --transport http https://mcp.paragraph.com/mcp
+npx @paragraph-com/mcp
 ```
 
-Or add `{"url": "https://mcp.paragraph.com/mcp"}` to your MCP config for Claude Desktop, Cursor, or VS Code.
-
-You can also [run the server locally](/development/mcp#local-server) with `npx @paragraph-com/mcp` if you prefer. See the [full MCP setup guide](/development/mcp) for all options.
+Works with Claude Code, Claude Desktop, Cursor, VS Code, and any MCP client. See the [full MCP setup guide](/development/mcp) for client-specific instructions and configuration.
 
 ## CLI for Agents
 
