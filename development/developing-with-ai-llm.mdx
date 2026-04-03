@@ -5,7 +5,102 @@ description: "Accelerate development with AI and LLMs using Paragraph's API."
 
 This guide covers best practices for using AI and Large Language Models (LLMs) to accelerate your development workflow with Paragraph's API.
 
-## Quick Context for LLMs
+## Quick start: give your agent Paragraph access
+
+The fastest way to connect any AI agent to Paragraph. Copy the prompt below and paste it into your agent's context:
+
+<Accordion title="Copy agent prompt">
+
+```text Paragraph agent prompt
+# Paragraph — Publishing & Newsletter Platform
+
+You can manage posts, publications, subscribers, and coins on paragraph.com.
+
+Use the **MCP server** for the best experience, the **CLI** for shell access, or the **REST API** directly.
+
+## MCP Server (recommended)
+
+Connect to the hosted server — no installation or API key management needed:
+
+claude mcp add paragraph --transport http https://mcp.paragraph.com/mcp
+
+Or add {"url": "https://mcp.paragraph.com/mcp"} to your MCP config for Claude Desktop, Cursor, or VS Code.
+
+## CLI (shell access)
+
+Install: npm install -g @paragraph-com/cli
+
+Authenticate: paragraph login
+
+### Posts
+paragraph post create --title "My Post" --file ./draft.md
+paragraph post list --json
+paragraph post get <id> --json
+paragraph post update <id> --title "New Title"
+paragraph post publish <id>
+paragraph post delete <id> --yes
+paragraph search post --query "ethereum" --json
+
+### Subscribers
+paragraph subscriber list --json
+paragraph subscriber add --email user@example.com
+paragraph subscriber add --wallet 0x1234...abcd
+paragraph subscriber count <publication-id>
+
+### Publications & Coins
+paragraph publication get <slug> --json
+paragraph coin get <id-or-address> --json
+paragraph coin popular --json
+
+Always use --json for structured output when processing results programmatically.
+
+## REST API (no install)
+
+Base URL: https://public.api.paragraph.com/api
+
+Auth: pass API key as Bearer token in Authorization header.
+Get a key at paragraph.com/settings -> Publication -> Developer.
+
+### Key endpoints
+GET  /v1/posts/<id>                              — get post
+GET  /v1/publications/slug/<slug>                — get publication
+POST /v1/posts                                   — create post (auth required)
+PUT  /v1/posts/<id>                              — update post (auth required)
+GET  /v1/subscribers                             — list subscribers (auth required)
+POST /v1/subscribers                             — add subscriber (auth required)
+GET  /v1/discover/search?q=<query>               — search posts
+
+### Create a post (curl)
+curl -X POST https://public.api.paragraph.com/api/v1/posts \
+  -H "Authorization: Bearer <api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{"title": "My Post", "markdown": "# Hello World"}'
+
+## TypeScript SDK
+
+npm install @paragraph-com/sdk
+
+import { ParagraphAPI } from "@paragraph-com/sdk"
+const api = new ParagraphAPI({ apiKey: "<api-key>" })
+
+const post = await api.posts.create({ title: "My Post", markdown: "# Hello" })
+const { items } = await api.posts.list()
+const pub = await api.publications.get({ slug: "@blog" }).single()
+const results = await api.search.posts("ethereum")
+
+Full API reference: https://paragraph.com/docs/api-reference/
+Full docs: https://paragraph.com/docs/llms-full.txt
+```
+
+</Accordion>
+
+Or install the [Agent Skill](https://github.com/paragraph-xyz/skill) for a more structured setup:
+
+```bash
+npx skills add paragraph-xyz/skill
+```
+
+## Context for LLMs
 
 When working with AI assistants like Claude, ChatGPT, or Cursor, you can provide comprehensive API context by sharing our full documentation:
 
