@@ -38,6 +38,8 @@ paragraph post list --json
 paragraph post get <id> --json
 paragraph post update <id> --title "New Title"
 paragraph post publish <id>
+paragraph post schedule <id> --at "2026-05-01T09:00:00Z"
+paragraph post unschedule <id>
 paragraph post delete <id> --yes
 paragraph search post --query "ethereum" --json
 
@@ -76,6 +78,15 @@ curl -X POST https://public.api.paragraph.com/api/v1/posts \
   -H "Content-Type: application/json" \
   -d '{"title": "My Post", "markdown": "# Hello World"}'
 
+### Schedule a post for future publication
+curl -X POST https://public.api.paragraph.com/api/v1/posts \
+  -H "Authorization: Bearer <api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{"title": "My Post", "markdown": "# Hello", "scheduledAt": 1746090000000}'
+
+PUT /v1/posts/<id> with {"scheduledAt": <unix-ms>} to schedule a draft.
+PUT /v1/posts/<id> with {"scheduledAt": null} to cancel.
+
 ## TypeScript SDK
 
 npm install @paragraph-com/sdk
@@ -84,6 +95,7 @@ import { ParagraphAPI } from "@paragraph-com/sdk"
 const api = new ParagraphAPI({ apiKey: "<api-key>" })
 
 const post = await api.posts.create({ title: "My Post", markdown: "# Hello" })
+const scheduled = await api.posts.create({ title: "My Post", markdown: "# Hello", scheduledAt: Date.now() + 86400000 })
 const { items } = await api.posts.list()
 const pub = await api.publications.get({ slug: "@blog" }).single()
 const results = await api.search.posts("ethereum")
@@ -131,15 +143,15 @@ PARAGRAPH_API_KEY=<your-api-key> paragraph --json post list
 
 See the [full command reference](/development/cli/commands) for details.
 
-## Agent Skill
+## Agent Skills
 
-Install the [Paragraph Agent Skill](https://github.com/paragraph-xyz/skill) to teach AI agents (Claude Code, Cursor, etc.) how to use the CLI:
+Install the [Paragraph Agent Skills](https://github.com/paragraph-xyz/skill) to teach AI agents (Claude Code, Cursor, etc.) how to use the CLI, REST API, SDK, and MCP server:
 
 ```bash
 npx skills add paragraph-xyz/skill
 ```
 
-The skill includes working agreements, all commands with examples, JSON response shapes, and common patterns for chaining commands.
+The skills include working agreements, commands and endpoints with examples, JSON response shapes, and common patterns.
 
 ## Best Practices for AI-Assisted Development
 
